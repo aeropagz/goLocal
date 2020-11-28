@@ -3,9 +3,12 @@ let router = express.Router();
 
 let index = require("../controllers/index");
 let user = require("../controllers/user");
+let farmer = require("./farmer")
 
 //Homepage Routes
 router.get("/", index.homepage);
+router.use("/farmer", farmer);
+
 
 
 //Login and Register Endpoints
