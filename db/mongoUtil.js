@@ -4,7 +4,7 @@ let port = process.env.DB_PORT ? process.env.DB_PORT : "27017";
 let dbName = process.env.DB_NAME ? process.env.DB_NAME : "goLocal";
 
 // Connection URL
-const url = "mongodb://" + host + ":" + port + "/" + dbName;
+const url = "mongodb://goLocalAdmin:goLocalAdminPass@" + host + ":" + port + "/" + dbName;
 let _db;
 
 async function connectToServer() {
