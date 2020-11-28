@@ -1,0 +1,59 @@
+.bodyClass {
+    font-family: Open Sans Regular, Arial, sans-serif;
+    color: black;
+    word-break: break-word;
+  }
+  
+  .smalltext {
+    font-size: small;
+  }
+  
+  .xsmalltext {
+    font-size: smaller;
+  }
+  
+  .xxsmalltext {
+    font-size: x-small;
+  }
+  
+  .largetext {
+    font-size: large;
+  }
+  
+  .xlargetext {
+    font-size: x-large;
+  }
+  
+  .xxlargetext {
+    font-size: xx-large;
+  }
+  
+  .boldText{
+    font-weight: bold;
+  }
+
+  .redColor {
+    color: rgb(185, 30, 43);
+  }
+  
+  .blackColor {
+    color: rgb(0, 0, 0);
+  }
+  
+  .whiteColor {
+    color: white;
+  }
+ 
+  .centerelement {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .centerelement-vertical {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  
+
+  
+  
