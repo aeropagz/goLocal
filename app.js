@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 let cors = require("cors");
 let path = require("path");
 
-let indexRouter = require("./routes/index");
+let router = require("./routes/index");
 
 // Destructure our bodyParser methods
 const { urlencoded, json } = bodyParser;
@@ -20,10 +20,7 @@ app.use(cors());
 //Static data to be exposed
 app.use(express.static(__dirname + "/public"));
 
-app.use("/", indexRouter);
-
-app.post("/addData", (req, res) => {
-});
+app.use("/", router);
 
 app.listen(port, () => {
   console.log("Server started at port :" + port);
