@@ -9,17 +9,18 @@ dotenv.config();
 const saltRounds = 1;
 
 showCustLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/custLogin.html"));
+    res.sendFile(path.join(__dirname + "/../public/user/custLogin.html"));
 }
 showCustRegister = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/custRegister.html"));
+    res.sendFile(path.join(__dirname + "/../public/user/custRegister.html"));
 }
 showFarmLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/farmLogin.html"));
+    res.sendFile(path.join(__dirname + "/../public/user/farmLogin.html"));
 }
 showFarmRegister = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/farmRegister.html"));
+    res.sendFile(path.join(__dirname + "/../public/user/farmRegister.html"));
 }
+
 
 farmLogin = function(req, res, next) {
     let reqUsername = req.body.username;
@@ -33,21 +34,23 @@ farmLogin = function(req, res, next) {
         let user = JSON.parse(data);
 
         bcrypt.compare(reqPassword, user.password, function (err, result){
-        if (result === true){
-                let jwtPayload = {
-                    "id": user.id,
-                    "name": user.name,
-                    "role": user.role,
-                }
-                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-                res.cookie('myToken', token);
-                res.redirect('/');
-        } else{
-            res.redirect('/user/farmer/login');
-        }
+            if (err) throw err;
+            if (result === true){
+                    let jwtPayload = {
+                        "id": user.id,
+                        "name": user.name,
+                        "role": user.role,
+                    }
+                    let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+                    res.cookie('myToken', token);
+                    res.redirect('/');
+            } else{
+                res.redirect('/user/farmer/login');
+            }
         });
 });
 }
+
 
 farmRegister = function(req, res, next) {
     let reqUsername = req.body.username;
@@ -83,6 +86,8 @@ farmRegister = function(req, res, next) {
 
 
 }
+
+
 custLogin = function(req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
@@ -110,6 +115,8 @@ custLogin = function(req, res, next) {
         });
 });
 }
+
+
 custRegister = function(req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
@@ -143,6 +150,8 @@ custRegister = function(req, res, next) {
     });
 
 }
+
+
 showSecret = function(req, res, next){
     res.sendFile(path.join(__dirname + "/../public/secret.html"));
 }
