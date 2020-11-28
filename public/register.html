@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de-DE">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Nesseccary CSS Files -->
+    <link rel="stylesheet" href="assets/styles/styles.css">
+
+    <!-- Title for the page can be changed here -->
+    <title>Registration Page</title>
+
+    <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+
+    <!--My JS file-->
+    <script src="js/register.js"></script>
+</head>
+
+<body class="bodyClass blackColor">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-ligh offset-md-2" id="navbar1">
+        <a class="navbar-brand" href="index.html">
+            <!-- <img class="logo" src="assets/images/BK_AUFKLEBER_BUNT.png" alt="Go Local"> -->
+            GoLocal
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link navLinks " href="login.html">Registration</a>
+                </li>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container2 mt-4 mb-4 col-md-8 offset-md-2 ">
+        <div class="mt-4">
+            <div id="login">
+                <h3 class="text-center text-info">Registration</h3>
+                <div class="container">
+                    <div id="login-row" class="row justify-content-center align-items-center">
+                        <div id="login-column" class="col-md-6">
+                            <div id="login-box" class="col-md-12">
+                                <form id="login-form" class="form" action="/user/login" method="post">
+                                    <div class="form-group">
+                                        <label for="username" class="text-info">Username:</label><br>
+                                        <input type="text" name="username" id="username" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="text-info">Password:</label><br>
+                                        <input type="text" name="password" id="password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                    </div>
+                                    <div id="register-link" class="text-right">
+                                        <a href="register.html" class="text-info">Register here</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
