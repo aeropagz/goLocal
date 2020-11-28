@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "name": "John Snow",
+    "password": "Winter is coming",
+    "role": "customer",
+    "username": "johnsnow@north.sh",
+    "cart": [{
+        "product": "potato",
+        "quantity": 9
+    }]
+
+}

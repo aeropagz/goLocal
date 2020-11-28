@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 let cors = require("cors");
 let path = require("path");
+let cookieParser = require('cookie-parser');
 
 let router = require("./routes/index");
 
@@ -15,6 +16,7 @@ const app = express();
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cors());
+app.use(cookieParser());
 
 
 //Static data to be exposed

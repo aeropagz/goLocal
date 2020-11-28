@@ -1,0 +1,10 @@
+{
+    "id": 2,
+    "name": "Hodor",
+    "password": "holdthedoor",
+    "role": "farmer",
+    "username": "hodor@doorshop.sh",
+    "license-key": "ABC-123-456-XYZ",
+    "location": "SH",
+    "payment_method": ["COD", "Paypal"]
+}
