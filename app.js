@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 let cors = require("cors");
 let path = require("path");
 
+let indexRouter = require("./routes/index");
+
 // Destructure our bodyParser methods
 const { urlencoded, json } = bodyParser;
 
@@ -18,10 +20,7 @@ app.use(cors());
 //Static data to be exposed
 app.use(express.static(__dirname + "/public"));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
-});
-
+app.use("/", indexRouter);
 
 app.post("/addData", (req, res) => {
 });
