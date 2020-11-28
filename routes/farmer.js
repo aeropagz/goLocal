@@ -3,6 +3,6 @@ let router = express.Router();
 
 let farmer = require("../controllers/farmer")
 
-router.get("/validateLicense", farmer.validateLicense)
+router.post("/validateLicense", farmer.validateLicense)
 
 module.exports = router;
