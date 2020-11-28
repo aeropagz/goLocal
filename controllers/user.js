@@ -16,7 +16,7 @@ dotenv.config();
 const saltRounds = 1;
 
 showLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/login.html"));
+    res.sendFile(path.join(__dirname + "/../public/login.html"));
 }
 showCustRegister = function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/custRegister.html"));
@@ -43,7 +43,7 @@ farmRegister =  async function(req, res, next) {
                 id: uuid.v4(),
                 name: reqName,
                 password: hash,
-                role: "customer",
+                role: "farmer",
                 username: reqUsername,
                 "license-key": reqLicense,
                 location: reqLocation,
@@ -106,10 +106,8 @@ login = async function(req, res, next) {
     let user = await findUser(reqUsername, reqPassword);
     user = user[0];
     if(user){
-        console.log('User found ',user.password);
         bcrypt.compare(reqPassword, user.password, function (err, result){
             if (result === true){
-                    console.log("match");
                     let jwtPayload = {
                         "id": user.id,
                         "name": user.name,
