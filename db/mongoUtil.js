@@ -12,7 +12,6 @@ async function connectToServer() {
     if (_db) {
       return _db;
     }
-    console.log("Trying to connect to Database");
     const client = await MongoClient.connect(url, {
       useUnifiedTopology: true,
       useNewUrlParser: true
