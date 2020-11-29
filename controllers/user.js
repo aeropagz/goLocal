@@ -12,30 +12,30 @@ dotenv.config();
 
 const saltRounds = 1;
 
-showLogin = function(req, res, next) {
+showLogin = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/login.html"));
 }
-showCustRegister = function(req, res, next) {
+showCustRegister = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/custRegister.html"));
 }
 
-showFarmRegister = function(req, res, next) {
+showFarmRegister = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/farmRegister.html"));
 }
 
 
-farmRegister =  async function(req, res, next) {
+farmRegister = async function (req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
     let reqName = req.body.name;
     let reqLicense = req.body.license;
     let reqLocation = req.body.location;
     let reqPayment = req.body.payment;
-    
+
     let result = await db.validateLicense(reqName, reqLicense);
     console.log(result);
-    if (result['result'] === "positive"){
-        bcrypt.hash(reqPassword, saltRounds, function (err, hash){
+    if (result['result'] === "positive") {
+        bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
             let user = {
                 id: uuid.v4(),
                 name: reqName,
@@ -46,34 +46,34 @@ farmRegister =  async function(req, res, next) {
                 location: reqLocation,
                 "payment_method": reqPayment,
             };
-            db.createUser(user, function(err, result){
-                if(err) throw err;
+            db.createUser(user, function (err, result) {
+                if (err) throw err;
                 let jwtPayload = {
                     "id": user.id,
                     "name": user.name,
                     "role": user.role,
                     "location": user.location,
                 }
-                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                 res.cookie('myToken', token);
                 res.status(201).redirect('/');
             });
-    
+
         });
     } else
-    res.redirect(303, '/user/register/farmer');
-    
+        res.redirect(303, '/user/register/farmer');
+
 
 
 }
 
 
-custRegister = function(req, res, next) {
+custRegister = function (req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
     let reqName = req.body.name;
-    
-    let hashPassword = bcrypt.hash(reqPassword, saltRounds, function (err, hash){
+
+    let hashPassword = bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
         let user = {
             id: uuid.v4(),
             name: reqName,
@@ -82,14 +82,14 @@ custRegister = function(req, res, next) {
             username: reqUsername,
             cart: []
         };
-        db.createUser(user, function(err, result){
-            if(err) throw err;
+        db.createUser(user, function (err, result) {
+            if (err) throw err;
             let jwtPayload = {
                 "id": user.id,
                 "name": user.name,
                 "role": user.role,
             }
-            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
             res.cookie('myToken', token);
             res.status(201).redirect('/');
 
@@ -97,7 +97,7 @@ custRegister = function(req, res, next) {
     });
 }
 
-login = async function(req, res, next) {
+login = async function (req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
     console.log(reqUsername, reqPassword);
@@ -125,7 +125,7 @@ login = async function(req, res, next) {
     }
 }
 
-showSecret = function(req, res, next){
+showSecret = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/secret.html"));
 }
 
@@ -137,5 +137,5 @@ module.exports = {
     farmRegister,
     custRegister,
     login,
-    showSecret    
+    showSecret
 }

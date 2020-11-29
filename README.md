@@ -3,7 +3,7 @@ A local farmers marketplace
 
 ## to run server
 1. run npm install
-2. run node app.js
+2. run node server
 3. Server is up and running. You can check at http://localhost:8080
 
 
