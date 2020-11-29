@@ -9,6 +9,7 @@ let farmer = require("./farmer")
 router.get("/", index.homepage);
 router.get("/login", index.loginpage);
 router.get("/register", index.registerpage);
+router.get("/registerfarmer", index.registerfarmerpage);
 
 
 router.use("/farmer", farmer);

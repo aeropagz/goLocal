@@ -79,11 +79,18 @@
                                             required>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-info btn-md" value="Register"
-                                            onclick="createUser()">Register</button>
+                                        <label for="licenseKey" class="text-info">License Key:</label><br>
+                                        <input type="text" name="licenseKey" id="licenseKey" class="form-control"
+                                            required> <br>
+                                        <button type="button" class="btn btn-info btn-md" value="validate"
+                                            onclick="validateKey()">Validate Key</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info btn-md" value="RegisterFarmer"
+                                            onclick="createFarmer()">Register</button>
                                     </div>
                                     <div id="register-link" class="smalltext">
-                                        <a href="registerfarmer" class="text-info">Register as farmer</a><br>
+                                        <a href="register" class="text-info">Register as customer</a><br>
                                         <a href="login" class="text-info">Login here</a>
                                     </div>
                                 </form>

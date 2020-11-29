@@ -12,6 +12,10 @@ registerpage = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/register.html"));
 }
 
+registerfarmerpage = function (req, res, next) {
+    res.sendFile(path.join(__dirname + "/../public/user/registerfarmer.html"));
+}
+
 module.exports = {
-    homepage, loginpage, registerpage
+    homepage, loginpage, registerpage, registerfarmerpage
 }
