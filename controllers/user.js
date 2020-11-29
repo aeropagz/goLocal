@@ -1,40 +1,112 @@
 let path = require('path');
 let bcrypt = require('bcrypt');
-let fs = require('fs');
 let dotenv = require('dotenv');
 let jwt = require('jsonwebtoken');
 let process = require('process');
+let uuid = require('uuid');
+
+let db = require("../db/index");
+
+
 dotenv.config();
 
 const saltRounds = 1;
 
-showCustLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/custLogin.html"));
+showLogin = function (req, res, next) {
+    res.sendFile(path.join(__dirname + "/../public/user/login.html"));
 }
-showCustRegister = function(req, res, next) {
+showCustRegister = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/custRegister.html"));
 }
-showFarmLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/farmLogin.html"));
-}
-showFarmRegister = function(req, res, next) {
+
+showFarmRegister = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/farmRegister.html"));
 }
 
 
-farmLogin = function(req, res, next) {
+farmRegister = async function (req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
+    let reqName = req.body.name;
+    let reqLicense = req.body.license;
+    let reqLocation = req.body.location;
+    let reqPayment = req.body.payment;
 
-    fs.readFile("db/" + reqUsername +".json", 'utf-8', function(err, data){
-        if(err){
-            console.log(err);
-            res.redirect('/user/farmer/login');
-        }
-        let user = JSON.parse(data);
+    let result = await db.validateLicense(reqName, reqLicense);
+    console.log(result);
+    if (result['result'] === "positive") {
+        bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
+            let user = {
+                id: uuid.v4(),
+                name: reqName,
+                password: hash,
+                role: "farmer",
+                username: reqUsername,
+                "license-key": reqLicense,
+                location: reqLocation,
+                "payment_method": reqPayment,
+            };
+            db.createUser(user, function (err, result) {
+                if (err) throw err;
+                let jwtPayload = {
+                    "id": user.id,
+                    "name": user.name,
+                    "role": user.role,
+                    "location": user.location,
+                }
+                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+                res.cookie('myToken', token);
+                res.status(201).json({"result":"succes"});
+            });
 
-        bcrypt.compare(reqPassword, user.password, function (err, result){
+        });
+    } else
+        res.sendStatus(500);
+
+
+
+}
+
+
+custRegister = function (req, res, next) {
+    let reqUsername = req.body.username;
+    let reqPassword = req.body.password;
+    let reqName = req.body.name;
+
+    bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
+        let user = {
+            id: uuid.v4(),
+            name: reqName,
+            password: hash,
+            role: "customer",
+            username: reqUsername,
+            cart: []
+        };
+        db.createUser(user, function (err, result) {
             if (err) throw err;
+            let jwtPayload = {
+                "id": user.id,
+                "name": user.name,
+                "role": user.role,
+            }
+            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+            res.cookie('myToken', token);
+            res.status(201).json({"result":"succes"});
+
+        });
+    });
+}
+
+login = async function (req, res, next) {
+    let reqUsername = req.body.username;
+    let reqPassword = req.body.password;
+    console.log(reqUsername, reqPassword);
+    console.log(req.body);
+
+    let user = await db.findUser(reqUsername);
+    user = user[0];
+    if(user){
+        bcrypt.compare(reqPassword, user.password, function (err, result){
             if (result === true){
                     let jwtPayload = {
                         "id": user.id,
@@ -43,128 +115,27 @@ farmLogin = function(req, res, next) {
                     }
                     let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
                     res.cookie('myToken', token);
-                    res.redirect('/');
+                    res.status(202).redirect('/');
             } else{
-                res.redirect('/user/farmer/login');
+                res.redirect(304, '/user/login');
             }
         });
-});
+    } else{
+        res.redirect(305, "/user/login");
+    }
 }
 
-
-farmRegister = function(req, res, next) {
-    let reqUsername = req.body.username;
-    let reqPassword = req.body.password;
-    let reqName = req.body.name;
-
-    bcrypt.hash(reqPassword, saltRounds, function (err, hash){
-        let user = {
-            id: Math.random().toString(36).substr(2, 9),
-            name: reqName,
-            password: hash,
-            role: "customer",
-            username: reqUsername,
-            cart: []
-            
-        };
-        let json = JSON.stringify(user, null, 2);
-        console.log(json);
-        fs.writeFile("db/" + reqUsername + ".json", json, 'utf-8', function(error){
-            if (error) throw error;
-            let jwtPayload = {
-                "id": user.id,
-                "name": reqName,
-                "role": "customer",
-            };
-            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-            res.cookie('myToken', token);
-            res.redirect('/user/register/farmer');
-
-        });
-
-    });
-
-
-}
-
-
-custLogin = function(req, res, next) {
-    let reqUsername = req.body.username;
-    let reqPassword = req.body.password;
-
-    fs.readFile("db/" + reqUsername +".json", 'utf-8', function(err, data){
-        if(err){
-            console.log(err);
-            res.redirect('/user/farmer/login');
-        }
-        let user = JSON.parse(data);
-
-        bcrypt.compare(reqPassword, user.password, function (err, result){
-        if (result === true){
-                let jwtPayload = {
-                    "id": user.id,
-                    "name": user.name,
-                    "role": user.role,
-                }
-                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-                res.cookie('myToken', token);
-                res.redirect('/');
-        } else{
-            res.redirect('/user/farmer/login');
-        }
-        });
-});
-}
-
-
-custRegister = function(req, res, next) {
-    let reqUsername = req.body.username;
-    let reqPassword = req.body.password;
-    let reqName = req.body.name;
-
-    let hashPassword = bcrypt.hash(reqPassword, saltRounds, function (err, hash){
-        let user = {
-            id: Math.random().toString(36).substr(2, 9),
-            name: reqName,
-            password: hash,
-            role: "customer",
-            username: reqUsername,
-            cart: []
-            
-        };
-        let json = JSON.stringify(user, null, 2);
-        console.log(json);
-        fs.writeFile("db/" + reqName + ".json", json, 'utf-8', function(error){
-            if (error) throw error;
-            let jwtPayload = {
-                "id": user.id,
-                "name": reqName,
-                "role": "customer",
-            };
-            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-            res.cookie('myToken', token);
-            res.redirect('/user/register/farmer');
-
-        });
-
-    });
-
-}
-
-
-showSecret = function(req, res, next){
+showSecret = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/secret.html"));
 }
 
 
 module.exports = {
-    showCustLogin,
     showCustRegister,
-    showFarmLogin,
+    showLogin,
     showFarmRegister,
-    farmLogin,
     farmRegister,
-    custLogin,
     custRegister,
-    showSecret    
+    login,
+    showSecret
 }

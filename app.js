@@ -10,7 +10,7 @@ let mongoUtil = require("./db/mongoUtil");
 // Destructure our bodyParser methods
 const { urlencoded, json } = bodyParser;
 
-const port = process.env.PORT || 8080;
+
 const app = express();
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
@@ -27,6 +27,11 @@ app.use(express.static(__dirname + "/public"));
 
 app.use("/", router);
 
-app.listen(port, () => {
-  console.log("Server started at port :" + port);
+const students = ["Elie", "Matt", "Joel", "Michael"];
+
+app.get("/students", (req, res) => {
+  return res.json(students);
 });
+
+
+module.exports = app;

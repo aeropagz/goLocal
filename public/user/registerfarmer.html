@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="de-DE">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Nesseccary CSS Files -->
+    <link rel="stylesheet" href="../assets/styles/styles.css">
+
+    <!-- Title for the page can be changed here -->
+    <title>Registration Page</title>
+
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+
+    <!--My JS file-->
+    <script src="../js/register.js"></script>
+</head>
+
+<body class="bodyClass blackColor">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-ligh offset-md-2" id="navbar1">
+        <a class="navbar-brand" href="index.html">
+            <!-- <img class="logo" src="assets/images/BK_AUFKLEBER_BUNT.png" alt="Go Local"> -->
+            GoLocal
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link navLinks text-info" href="login">Login</a>
+                </li>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container2 mt-4 mb-4 col-md-8 offset-md-2 ">
+        <div class="mt-4">
+            <div>
+                <h3 class="text-center text-info">Registration</h3>
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-6">
+                            <div class="col-md-12">
+                                <form id="registration" class="form">
+                                    <div class="form-group">
+                                        <label for="name" class="text-info">Name:</label><br>
+                                        <input type="text" name="name" id="name" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="username" class="text-info">Email:</label><br>
+                                        <input type="email" name="uername" id="username" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="text-info">Password:</label><br>
+                                        <input type="password" name="password" id="password" class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="text-info">Re-enter Password:</label><br>
+                                        <input type="password" name="password" id="re-password" class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="location" class="text-info">Location:</label><br>
+                                        <select class="form-control custom-select-sm" id="location"
+                                            data-dropup-auto="false">
+                                            <option value="Baden-Wüttemberg" selected>Baden-Wüttemberg</option>
+                                            <option value="Bayern">Bayern</option>
+                                            <option value="Berlin">Berlin</option>
+                                            <option value="Brandenburg">Brandenburg</option>
+                                            <option value="Bremen">Bremen</option>
+                                            <option value="Hamburg">Hamburg</option>
+                                            <option value="Hessen">Hessen</option>
+                                            <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
+                                            <option value="Niedersachsen">Niedersachsen</option>
+                                            <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
+                                            <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+                                            <option value="Saarland">Saarland</option>
+                                            <option value="Sachsen">Sachsen</option>
+                                            <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+                                            <option value="Schleswig-Holstein">Schleswig-Holstein</option>
+                                            <option value="Thueringen">Thueringen</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="paymentOptions" class="text-info">Accepted Payment Options: <span
+                                                class="smalltext"> (Select atleast 1 option)</span></span></label><br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="paymentOptions"
+                                                id="COD" value="COD">
+                                            <label class="form-check-label" for="cod">Cash-On-Delivery</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="paymentOptions"
+                                                id="paypal" value="paypal">
+                                            <label class="form-check-label" for="paypal">Paypal</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="licenseKey" class="text-info">License Key:</label><br>
+                                        <input type="text" name="licenseKey" id="licenseKey" class="form-control"
+                                            required> <br>
+                                        <button type="button" class="btn btn-info btn-md" value="validate"
+                                            onclick="validateKey()">Validate Key</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info btn-md" value="RegisterFarmer"
+                                            onclick="createFarmer()">Register</button>
+                                    </div>
+                                    <div id="register-link" class="smalltext">
+                                        <a href="register" class="text-info">Register as customer</a><br>
+                                        <a href="login" class="text-info">Login here</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
