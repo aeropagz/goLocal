@@ -1,14 +1,11 @@
 let path = require('path');
 let bcrypt = require('bcrypt');
-let fs = require('fs');
 let dotenv = require('dotenv');
 let jwt = require('jsonwebtoken');
 let process = require('process');
 let uuid = require('uuid');
 
 let db = require("../db/index");
-const { findUser } = require('../db/user');
-const { validateLicense } = require('../db/farmer');
 
 
 dotenv.config();
@@ -59,12 +56,12 @@ farmRegister = async function (req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                 res.cookie('myToken', token);
-                res.redirect(201, '/');
+                res.status(201).json({"result":"succes"});
             });
 
         });
     } else
-        res.redirect(303, '/user/register/farmer');
+        res.sendStatus(500);
 
 
 
@@ -76,7 +73,7 @@ custRegister = function (req, res, next) {
     let reqPassword = req.body.password;
     let reqName = req.body.name;
 
-    let hashPassword = bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
+    bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
         let user = {
             id: uuid.v4(),
             name: reqName,
@@ -94,7 +91,7 @@ custRegister = function (req, res, next) {
             }
             let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
             res.cookie('myToken', token);
-            res.status(201).redirect('/');
+            res.status(201).json({"result":"succes"});
 
         });
     });
@@ -103,26 +100,28 @@ custRegister = function (req, res, next) {
 login = async function (req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
+    console.log(reqUsername, reqPassword);
+    console.log(req.body);
 
     let user = await db.findUser(reqUsername);
     user = user[0];
-    if (user) {
-        bcrypt.compare(reqPassword, user.password, function (err, result) {
-            if (result === true) {
-                let jwtPayload = {
-                    "id": user.id,
-                    "name": user.name,
-                    "role": user.role,
-                }
-                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-                res.cookie('myToken', token);
-                res.status(201).redirect('/');
-            } else {
-                res.redirect(303, '/user/login');
+    if(user){
+        bcrypt.compare(reqPassword, user.password, function (err, result){
+            if (result === true){
+                    let jwtPayload = {
+                        "id": user.id,
+                        "name": user.name,
+                        "role": user.role,
+                    }
+                    let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+                    res.cookie('myToken', token);
+                    res.status(202).redirect('/');
+            } else{
+                res.redirect(304, '/user/login');
             }
         });
-    } else {
-        res.redirect(303, "/user/login");
+    } else{
+        res.redirect(305, "/user/login");
     }
 }
 
