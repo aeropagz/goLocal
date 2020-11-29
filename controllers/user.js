@@ -1,14 +1,11 @@
 let path = require('path');
 let bcrypt = require('bcrypt');
-let fs = require('fs');
 let dotenv = require('dotenv');
 let jwt = require('jsonwebtoken');
 let process = require('process');
 let uuid = require('uuid');
 
 let db = require("../db/index");
-const { findUser } = require('../db/user');
-const { validateLicense } = require('../db/farmer');
 
 
 dotenv.config();
@@ -59,7 +56,7 @@ farmRegister =  async function(req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
                 res.cookie('myToken', token);
-                res.redirect(201,'/');
+                res.status(201).redirect('/');
             });
     
         });
@@ -103,6 +100,8 @@ custRegister = function(req, res, next) {
 login = async function(req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
+    console.log(reqUsername, reqPassword);
+    console.log(req.body);
 
     let user = await db.findUser(reqUsername);
     user = user[0];
@@ -116,13 +115,13 @@ login = async function(req, res, next) {
                     }
                     let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
                     res.cookie('myToken', token);
-                    res.status(201).redirect('/');
+                    res.status(202).redirect('/');
             } else{
-                res.redirect(303, '/user/login');
+                res.redirect(304, '/user/login');
             }
         });
     } else{
-        res.redirect(303, "/user/login");
+        res.redirect(305, "/user/login");
     }
 }
 

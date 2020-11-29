@@ -1,4 +1,4 @@
-let db = require("../db/index")
+let db = require("../db/index");
 
 validateLicense = async function (req, res, next) {
     if (!req.body || !req.body.data || !req.body.data.key || !req.body.data.name) {
