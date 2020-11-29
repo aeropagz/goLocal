@@ -4,37 +4,109 @@ let fs = require('fs');
 let dotenv = require('dotenv');
 let jwt = require('jsonwebtoken');
 let process = require('process');
+let uuid = require('uuid');
+
+let db = require("../db/index");
+const { createCustomer, findUser } = require('../db/user');
+const { validateLicense } = require('../db/farmer');
+
+
 dotenv.config();
 
 const saltRounds = 1;
 
-showCustLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/custLogin.html"));
+showLogin = function(req, res, next) {
+    res.sendFile(path.join(__dirname + "/../public/login.html"));
 }
 showCustRegister = function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/custRegister.html"));
 }
-showFarmLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/farmLogin.html"));
-}
+
 showFarmRegister = function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/farmRegister.html"));
 }
 
 
-farmLogin = function(req, res, next) {
+farmRegister =  async function(req, res, next) {
+    let reqUsername = req.body.username;
+    let reqPassword = req.body.password;
+    let reqName = req.body.name;
+    let reqLicense = req.body.license;
+    let reqLocation = req.body.location;
+    let reqPayment = req.body.payment;
+    
+    let result = await validateLicense(reqName, reqLicense);
+    console.log(result);
+    if (result['result'] === "positive"){
+        bcrypt.hash(reqPassword, saltRounds, function (err, hash){
+            let user = {
+                id: uuid.v4(),
+                name: reqName,
+                password: hash,
+                role: "farmer",
+                username: reqUsername,
+                "license-key": reqLicense,
+                location: reqLocation,
+                "payment_method": reqPayment,
+            };
+            createUser(user, function(err, result){
+                if(err) throw err;
+                let jwtPayload = {
+                    "id": user.id,
+                    "name": user.name,
+                    "role": user.role,
+                    "location": user.location,
+                }
+                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+                res.cookie('myToken', token);
+                res.redirect('/');
+            });
+    
+        });
+    } else
+    res.redirect('/user/register/farmer');
+    
+
+
+}
+
+
+custRegister = function(req, res, next) {
+    let reqUsername = req.body.username;
+    let reqPassword = req.body.password;
+    let reqName = req.body.name;
+    
+    let hashPassword = bcrypt.hash(reqPassword, saltRounds, function (err, hash){
+        let user = {
+            id: uuid.v4(),
+            name: reqName,
+            password: hash,
+            role: "customer",
+            username: reqUsername,
+            cart: []
+        };
+        createCustomer(user, function(err, result){
+            if(err) throw err;
+            let jwtPayload = {
+                "id": user.id,
+                "name": user.name,
+                "role": user.role,
+            }
+            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+            res.cookie('myToken', token);
+            res.redirect('/');
+        });
+    });
+}
+
+login = async function(req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
 
-    fs.readFile("db/" + reqUsername +".json", 'utf-8', function(err, data){
-        if(err){
-            console.log(err);
-            res.redirect('/user/farmer/login');
-        }
-        let user = JSON.parse(data);
-
+    let user = await findUser(reqUsername, reqPassword);
+    user = user[0];
+    if(user){
         bcrypt.compare(reqPassword, user.password, function (err, result){
-            if (err) throw err;
             if (result === true){
                     let jwtPayload = {
                         "id": user.id,
@@ -45,112 +117,13 @@ farmLogin = function(req, res, next) {
                     res.cookie('myToken', token);
                     res.redirect('/');
             } else{
-                res.redirect('/user/farmer/login');
+                res.redirect('/user/login');
             }
         });
-});
+    } else{
+        res.redirect("/user/login");
+    }
 }
-
-
-farmRegister = function(req, res, next) {
-    let reqUsername = req.body.username;
-    let reqPassword = req.body.password;
-    let reqName = req.body.name;
-
-    bcrypt.hash(reqPassword, saltRounds, function (err, hash){
-        let user = {
-            id: Math.random().toString(36).substr(2, 9),
-            name: reqName,
-            password: hash,
-            role: "customer",
-            username: reqUsername,
-            cart: []
-            
-        };
-        let json = JSON.stringify(user, null, 2);
-        console.log(json);
-        fs.writeFile("db/" + reqUsername + ".json", json, 'utf-8', function(error){
-            if (error) throw error;
-            let jwtPayload = {
-                "id": user.id,
-                "name": reqName,
-                "role": "customer",
-            };
-            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-            res.cookie('myToken', token);
-            res.redirect('/user/register/farmer');
-
-        });
-
-    });
-
-
-}
-
-
-custLogin = function(req, res, next) {
-    let reqUsername = req.body.username;
-    let reqPassword = req.body.password;
-
-    fs.readFile("db/" + reqUsername +".json", 'utf-8', function(err, data){
-        if(err){
-            console.log(err);
-            res.redirect('/user/farmer/login');
-        }
-        let user = JSON.parse(data);
-
-        bcrypt.compare(reqPassword, user.password, function (err, result){
-        if (result === true){
-                let jwtPayload = {
-                    "id": user.id,
-                    "name": user.name,
-                    "role": user.role,
-                }
-                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-                res.cookie('myToken', token);
-                res.redirect('/');
-        } else{
-            res.redirect('/user/farmer/login');
-        }
-        });
-});
-}
-
-
-custRegister = function(req, res, next) {
-    let reqUsername = req.body.username;
-    let reqPassword = req.body.password;
-    let reqName = req.body.name;
-
-    let hashPassword = bcrypt.hash(reqPassword, saltRounds, function (err, hash){
-        let user = {
-            id: Math.random().toString(36).substr(2, 9),
-            name: reqName,
-            password: hash,
-            role: "customer",
-            username: reqUsername,
-            cart: []
-            
-        };
-        let json = JSON.stringify(user, null, 2);
-        console.log(json);
-        fs.writeFile("db/" + reqName + ".json", json, 'utf-8', function(error){
-            if (error) throw error;
-            let jwtPayload = {
-                "id": user.id,
-                "name": reqName,
-                "role": "customer",
-            };
-            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-            res.cookie('myToken', token);
-            res.redirect('/user/register/farmer');
-
-        });
-
-    });
-
-}
-
 
 showSecret = function(req, res, next){
     res.sendFile(path.join(__dirname + "/../public/secret.html"));
@@ -158,13 +131,11 @@ showSecret = function(req, res, next){
 
 
 module.exports = {
-    showCustLogin,
     showCustRegister,
-    showFarmLogin,
+    showLogin,
     showFarmRegister,
-    farmLogin,
     farmRegister,
-    custLogin,
     custRegister,
+    login,
     showSecret    
 }
