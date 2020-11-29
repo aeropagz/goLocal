@@ -50,22 +50,34 @@ function createFarmer() {
     let role = "farmer";
     let username = $("#username").val();
     let license = $("#licenseKey").val();
+    let location = $("select#location").val();
+    let payment = $('input[type=checkbox][name=paymentOptions]:checked').map(function (_, el) {
+        return $(el).val();
+    }).get();;
+
     if (password != repassword) {
         return alert("Your passwords don't match.");
     }
     if (name.trim() == "" || password.trim() == "" || username.trim() == "" || license.trim() == "") {
         return alert("All fields are required.")
     }
+    if (payment.length == 0) {
+        return alert("Atleast one payment method required.")
+    }
+    user = {
+        name,
+        password,
+        role,
+        username,
+        license,
+        location,
+        payment
+    }
+    console.log(user)
     // now for the big event
     $.ajax({
         'url': '/user/register/farmer',
-        'data': JSON.stringify({
-            name,
-            password,
-            role,
-            username,
-            license
-        }),
+        'data': JSON.stringify(user),
         'type': 'post',
         'dataType': 'json',
         'contentType': "application/json; charset=utf-8",
