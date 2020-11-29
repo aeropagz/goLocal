@@ -1,7 +1,5 @@
-$('#registration-form').submit(function (event) {
-    // prevent the usual form submission behaviour; the "action" attribute of the form
-    event.preventDefault();
-    // validation goes below...
+function createUser() {
+    // validation
     let name = $("#name").val();
     let password = $("#password").val();
     let repassword = $("#re-password").val();
@@ -10,15 +8,18 @@ $('#registration-form').submit(function (event) {
     if (password != repassword) {
         return alert("Your passwords don't match.");
     }
+    if (name.trim() == "" || password.trim() == "" || username.trim() == "") {
+        return alert("All fields are required.")
+    }
     // now for the big event
     $.ajax({
         'url': '/user/register/customer',
-        'data': {
+        'data': JSON.stringify({
             name,
             password,
             role,
             username
-        },
+        }),
         'type': 'post',
         'dataType': 'json',
         'contentType': "application/json; charset=utf-8",
@@ -38,6 +39,6 @@ $('#registration-form').submit(function (event) {
         .always(function (xhr, status) {
             // what you want to have happen no matter if the response is success or error
             // here, you would "stop" your loading animations, and maybe output a footer at the end of your content, reading "done"
-            $('#registration-form').reset();
+            $('#registration').reset();
         });
-});
+}
