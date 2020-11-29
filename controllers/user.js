@@ -94,7 +94,8 @@ custRegister = function (req, res, next) {
             }
             let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
             res.cookie('myToken', token);
-            res.redirect(201, '/');
+            res.status(201).redirect('/');
+
         });
     });
 }
@@ -115,7 +116,7 @@ login = async function (req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                 res.cookie('myToken', token);
-                res.redirect(201, '/');
+                res.status(201).redirect('/');
             } else {
                 res.redirect(303, '/user/login');
             }
