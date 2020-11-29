@@ -6,5 +6,6 @@ const checkRole = require("../middleware/checkRole");
 let products = require("../controllers/products")
 
 router.post('/create', [authenticate.authenticateJWT, checkRole.checkRoleFarmer], products.createProduct);
+router.get('/', products.getAllProducts);
 
 module.exports = router;

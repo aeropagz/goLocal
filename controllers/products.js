@@ -4,19 +4,18 @@ let uuid = require('uuid');
 
 createProduct = function(req, res, next){
     let reqName = req.body.name;
-    let reqDescribtion = req.body.describtion;
+    let reqDescription = req.body.description;
     let reqPrice = req.body.price;
     let reqManufactureDate = req.body.manufactureDate;
     let reqExpiryDate = req.body.expiryDate;
     let reqDeliveryMethod = req.body.deliveryMethod;
     let reqPaymentMethod = req.body.paymentMethod;
     let farmerID = req.user.id;
-    console.log("DB",db);
 
     let productObj = {
         id: uuid.v4(),
         name: reqName,
-        describtion: reqDescribtion,
+        description: reqDescription,
         farmerID: farmerID,
         price: reqPrice,
         "mfg-date": reqManufactureDate,
@@ -24,14 +23,18 @@ createProduct = function(req, res, next){
         "delivery-method": reqDeliveryMethod,
         "payment-methond": reqPaymentMethod
     }
-    // db.createProduct();
-    // console.log(db.createProduct);
     db.createProduct(productObj, function(err, result){
         if (err) throw err;
         res.json({"result": "success"})
     });
 }
 
+getAllProducts = async function(req, res, next){
+    let products = await db.getAllProducts();
+    res.json({"products": products});
+}
+
 module.exports = {
-    createProduct
+    createProduct,
+    getAllProducts
 }
