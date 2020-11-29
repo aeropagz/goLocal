@@ -15,13 +15,11 @@ createUser = function (userObj, callback){
     else return ({ "error": "Database not accessible" });
 }
 
-findUser = async function (username, password) {
+findUser = async function (username) {
     let db = mongoUtil.getDb();
     if (db) {
-        console.log(username, password);
         try {
             let user = await db.collection("users").find({ "username": username}).toArray();
-            console.log("result : " + JSON.stringify(user));
             return user;
         }
         catch (error) {

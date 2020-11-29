@@ -4,7 +4,7 @@
   "description": "Go Local E-Commerce Webserver",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "jest"
   },
   "repository": {

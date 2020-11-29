@@ -7,7 +7,7 @@ let process = require('process');
 let uuid = require('uuid');
 
 let db = require("../db/index");
-const { createCustomer, findUser } = require('../db/user');
+const { findUser } = require('../db/user');
 const { validateLicense } = require('../db/farmer');
 
 
@@ -16,7 +16,7 @@ dotenv.config();
 const saltRounds = 1;
 
 showLogin = function(req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/login.html"));
+    res.sendFile(path.join(__dirname + "/../public/user/login.html"));
 }
 showCustRegister = function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/custRegister.html"));
@@ -35,7 +35,7 @@ farmRegister =  async function(req, res, next) {
     let reqLocation = req.body.location;
     let reqPayment = req.body.payment;
     
-    let result = await validateLicense(reqName, reqLicense);
+    let result = await db.validateLicense(reqName, reqLicense);
     console.log(result);
     if (result['result'] === "positive"){
         bcrypt.hash(reqPassword, saltRounds, function (err, hash){
@@ -49,7 +49,7 @@ farmRegister =  async function(req, res, next) {
                 location: reqLocation,
                 "payment_method": reqPayment,
             };
-            createUser(user, function(err, result){
+            db.createUser(user, function(err, result){
                 if(err) throw err;
                 let jwtPayload = {
                     "id": user.id,
@@ -59,12 +59,12 @@ farmRegister =  async function(req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
                 res.cookie('myToken', token);
-                res.redirect('/');
+                res.redirect(201,'/');
             });
     
         });
     } else
-    res.redirect('/user/register/farmer');
+    res.redirect(303, '/user/register/farmer');
     
 
 
@@ -85,7 +85,7 @@ custRegister = function(req, res, next) {
             username: reqUsername,
             cart: []
         };
-        createCustomer(user, function(err, result){
+        db.createUser(user, function(err, result){
             if(err) throw err;
             let jwtPayload = {
                 "id": user.id,
@@ -94,7 +94,7 @@ custRegister = function(req, res, next) {
             }
             let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
             res.cookie('myToken', token);
-            res.redirect('/');
+            res.redirect(201,'/');
         });
     });
 }
@@ -103,7 +103,7 @@ login = async function(req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
 
-    let user = await findUser(reqUsername, reqPassword);
+    let user = await db.findUser(reqUsername);
     user = user[0];
     if(user){
         bcrypt.compare(reqPassword, user.password, function (err, result){
@@ -115,13 +115,13 @@ login = async function(req, res, next) {
                     }
                     let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
                     res.cookie('myToken', token);
-                    res.redirect('/');
+                    res.redirect(201, '/');
             } else{
-                res.redirect('/user/login');
+                res.redirect(303, '/user/login');
             }
         });
     } else{
-        res.redirect("/user/login");
+        res.redirect(303, "/user/login");
     }
 }
 
