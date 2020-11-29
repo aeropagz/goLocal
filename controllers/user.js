@@ -56,12 +56,12 @@ farmRegister = async function (req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                 res.cookie('myToken', token);
-                res.status(201).redirect('/');
+                res.status(201).json({"result":"succes"});
             });
 
         });
     } else
-        res.redirect(303, '/user/register/farmer');
+        res.sendStatus(500);
 
 
 
@@ -73,7 +73,7 @@ custRegister = function (req, res, next) {
     let reqPassword = req.body.password;
     let reqName = req.body.name;
 
-    let hashPassword = bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
+    bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
         let user = {
             id: uuid.v4(),
             name: reqName,
@@ -91,7 +91,7 @@ custRegister = function (req, res, next) {
             }
             let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
             res.cookie('myToken', token);
-            res.status(201).redirect('/');
+            res.status(201).json({"result":"succes"});
 
         });
     });

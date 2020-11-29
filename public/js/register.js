@@ -74,7 +74,7 @@ function createFarmer() {
             // what you want to happen when an ajax call to the server is successfully completed
             // 'response' is what you get back from the script/server
             // usually you want to format your response and spit it out to the page
-            alert("User created");
+            $(location).attr('href', '/');
         })
         .fail(function (code, status) {
             // what you want to happen if the ajax request fails (404 error, timeout, etc.)

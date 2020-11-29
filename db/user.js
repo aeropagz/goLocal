@@ -6,7 +6,7 @@ createUser = function (userObj, callback){
     if (db) {
         console.log("db :" + db);
         try {
-                db.collection("users").insertOne(userObj, callback)
+                db.collection("users").insertOne(userObj, callback);
         }
         catch (error) {
             throw error;
