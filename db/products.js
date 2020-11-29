@@ -4,7 +4,6 @@ let mongoUtil = require("./mongoUtil");
 createProduct = function (productObj, callback){
     let db = mongoUtil.getDb();
     if (db) {
-        console.log("db :" + db);
         try {
                 db.collection("products").insertOne(productObj, callback);
         }
@@ -17,4 +16,4 @@ createProduct = function (productObj, callback){
 
 module.exports = {
     createProduct,
-}
+};

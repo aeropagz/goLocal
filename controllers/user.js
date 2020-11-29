@@ -7,7 +7,7 @@ let uuid = require('uuid');
 
 let db = require("../db/index");
 
-
+console.log(db)
 dotenv.config();
 
 const saltRounds = 1;
@@ -56,7 +56,7 @@ farmRegister = async function (req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                 res.cookie('myToken', token);
-                res.status(201).json({"result":"succes"});
+                res.status(201).json({"result":"success"});
             });
 
         });
