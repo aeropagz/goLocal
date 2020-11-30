@@ -94,36 +94,97 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="quantity" class="text-info">Product Quantity:</label><br>
-                                    <input type="text" name="quantity" id="quantity" class="form-control" required>
+                                    <!--input type="text" name="quantity" id="quantity" class="form-control" required-->
+                                    <form>
+                                        <input id="quantity" type="number" min="0" max="200" step="1" value="0">
+                                        <label></label>
+                                    </form>    
                                 </div>
                                 <div class="form-group">
-                                    <label for="price" class="text-info">Price in €:</label><br>
-                                    <input type="text" name="price" id="price" class="form-control"
-                                        required>
+                                    <label for="price" class="text-info">Price:</label><br>
+                                    <form>
+                                        <input id="quantity" type="number" min="0" max="200" step="1" value="0">
+                                        <label>€</label>
+                                    </form> 
                                 </div>
                                 <div class="form-group">
                                     <label for="mfg-date" class="text-info">Manufacturing Date:</label><br>
-                                    <input type="text" name="mfg-date" id="mfg-date" class="form-control"
-                                        required>
+                                    <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                                        <input placeholder="Select date" type="text" id="example" class="form-control">
+                                        <i class="fas fa-calendar input-prefix"></i>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="exp-date" class="text-info">Expiry Date:</label><br>
-                                    <input type="text" name="exp-date" id="exp-date" class="form-control"
-                                        required>
+                                    <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                                        <input placeholder="Select date" type="text" id="example" class="form-control">
+                                        <i class="fas fa-calendar input-prefix"></i>
+                                    </div>
+                                        
                                 </div>
                                 <div class="form-group">
                                     <label for="dilivery" class="text-info">Dilivery Method:</label><br>
-                                    <input type="text" name="dilivery" id="dilivery" class="form-control"
-                                        required>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="card" style="width: 15rem; height: 4rem;"> 
+                                                    <div class="card-body"> 
+                                                        <div class="form-group">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="checkbox" name="paymentOptions"
+                                                                     id="COD" value="COD">
+                                                                <label class="form-check-label" for="cod">Home Dilivery</label>
+                                                            </div>
+                                                         </div>    
+                                                    </div>  
+                                                </div>        
+                                            </div>
+                                        
+                                            <div class="col-sm-3">
+                                                <div class="card card " style="width: 15rem; height: 4rem;"> 
+                                                    <div class="card-body"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="paymentOptions"
+                                                                id="paypal" value="paypal">
+                                                            <label class="form-check-label" for="paypal">Pick Up</label>        
+                                                        </div>
+                                                    </div>
+                                                </div>    
+                                            </div>
+                                        </div> 
                                 </div>
                                 <div class="form-group">
-                                    <label for="payment" class="text-info">Payment Option:</label><br>
-                                    <input type="text" name="payment" id="payment" class="form-control"
-                                        required>
+                                    <label for="dilivery" class="text-info">Payment Option:</label><br>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="card" style="width: 15rem; height: 4rem;"> 
+                                                    <div class="card-body"> 
+                                                        <div class="form-group">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="checkbox" name="paymentOptions"
+                                                                     id="COD" value="COD">
+                                                                <label class="form-check-label" for="cod">Cash-On-Delivery</label>
+                                                            </div>
+                                                         </div>    
+                                                    </div>  
+                                                </div>        
+                                            </div>
+                                        
+                                            <div class="col-sm-3">
+                                                <div class="card card " style="width: 15rem; height: 4rem;"> 
+                                                    <div class="card-body"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="paymentOptions"
+                                                                id="paypal" value="paypal">
+                                                            <label class="form-check-label" for="paypal">Paypal</label>        
+                                                        </div>
+                                                    </div>
+                                                </div>    
+                                            </div>
+                                        </div> 
                                 </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-info btn-md" value="RegisterFarmer"
-                                        onclick="createFarmer()">Submit Product</button>
+                                        onclick="">Submit Product</button>
                                 </div>
                             </form>
                         </div>
