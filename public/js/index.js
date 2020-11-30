@@ -72,7 +72,9 @@ function createContent(products, location) {
                     <p class="card-text"> Price: `+ product["price"] + `</p>
                     <p class="card-text"> MFG: `+ product["mfg-date"] + `</p>  
                     <p class="card-text"> Expiry: `+ product["exp-date"] + `</p> 
-                    <p class="card-text"> Description: `+ product["description"] + `</p> 
+                    <p class="card-text"> Description: `+ product["description"] + `</p>
+                    <p class="card-text"> Shipping: `+ product["delivery-method"] + `</p>
+                    <p class="card-text"> Payment: `+ product["payment-methond"] + `</p>
 
                     </div>   
                 </div>`
