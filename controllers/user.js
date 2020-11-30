@@ -43,11 +43,11 @@ farmRegister = async function (req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                 res.cookie('myToken', token);
-                res.status(201).json({"result":"success"});
+                res.status(201).json({ "result": "success" });
             });
 
         });
-    } else{
+    } else {
         res.sendStatus(500);
     }
 
@@ -75,10 +75,11 @@ custRegister = function (req, res, next) {
                 "id": user.id,
                 "name": user.name,
                 "role": user.role,
+                "cart": user.cart
             }
             let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
             res.cookie('myToken', token);
-            res.status(201).json({"result":"succes"});
+            res.status(201).json({ "result": "succes" });
 
         });
     });
@@ -90,51 +91,52 @@ login = async function (req, res, next) {
 
     let user = await db.findUser(reqUsername);
     user = user[0];
-    if(user){
-        bcrypt.compare(reqPassword, user.password, function (err, result){
-            if (result === true){
-                    let jwtPayload = {
-                        "id": user.id,
-                        "name": user.name,
-                        "role": user.role,
-                    }
-                    let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-                    res.cookie('myToken', token);
-                    res.status(202).redirect('/');
-            } else{
+    if (user) {
+        bcrypt.compare(reqPassword, user.password, function (err, result) {
+            if (result === true) {
+                let jwtPayload = {
+                    "id": user.id,
+                    "name": user.name,
+                    "role": user.role,
+                    "cart": user.cart
+                }
+                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+                res.cookie('myToken', token);
+                res.status(202).redirect('/');
+            } else {
                 res.redirect('/login');
             }
         });
-    } else{
+    } else {
         res.redirect("/login");
     }
 }
 
-getCart = async function(req, res, next){
+getCart = async function (req, res, next) {
     let userID = getUserID(req.cookies);
     let cart = await db.getCart(userID);
     res.json(cart);
 }
 
-addToCart = async function(req, res, next){
+addToCart = async function (req, res, next) {
     let userID = getUserID(req.cookies);
     let cart = await db.getCart(userID);
     let reqCartItem = req.body.cartItem
     let itemAdded = false;
     cart.array.forEach(element => {
-        if (element['id'] === reqCartItem['id']){
+        if (element['id'] === reqCartItem['id']) {
             element['quantity'] += parseInt(reqCartItem['quantity']);
             itemAdded = true;
         }
     });
-    if(itemAdded === false){
+    if (itemAdded === false) {
         cart.push(reqCartItem);
     }
     let result = await db.addToCart(userID, cartItem);
     res.json([result, cart]);
 }
 
-getUserID = function(cookies){
+getUserID = function (cookies) {
     return JSON.parse(Buffer.from(cookies['myToken'].split('.')[1], 'base64').toString())['id'];
 }
 

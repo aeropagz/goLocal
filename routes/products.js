@@ -7,5 +7,6 @@ let products = require("../controllers/products")
 
 router.post('/create', [authenticate.authenticateJWT, checkRole.checkRoleFarmer], products.createProduct);
 router.get('/', products.getAllProducts);
+router.get('/cartDetails', [authenticate.authenticateJWT], products.cartDetails);
 
 module.exports = router;

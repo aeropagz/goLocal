@@ -51,7 +51,7 @@ getProducts = async function (productIDs) {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-            let products = await db.collection("products").find({"id": {"$in": productIDs}}).toArray();
+            let products = await db.collection("products").find({ "id": { "$in": productIDs } }).toArray();
             return products;
         }
         catch (error) {
@@ -76,9 +76,24 @@ getProduct = async function (productID) {
     else return ({ "error": "Database not accessible" });
 }
 
+cartDetails = async function (productIDs) {
+    let db = mongoUtil.getDb();
+    if (db) {
+        try {
+            let products = await db.collection("products").find({ "id": { "$in": productIDs } }).toArray();
+            return products;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    else return ({ "error": "Database not accessible" });
+}
+
 module.exports = {
     createProduct,
     getAllProducts,
     getProduct,
-    getProducts
+    getProducts,
+    cartDetails
 };
