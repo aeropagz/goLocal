@@ -28,7 +28,23 @@ getAllProducts = async function () {
     else return ({ "error": "Database not accessible" });
 }
 
+
+getProduct = async function (productID) {
+    let db = mongoUtil.getDb();
+    if (db) {
+        try {
+            let product = await db.collection("products").findOne({"id": productID});
+            return product;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    else return ({ "error": "Database not accessible" });
+}
+
 module.exports = {
     createProduct,
-    getAllProducts
+    getAllProducts,
+    getProduct
 };

@@ -120,14 +120,14 @@ addToCart = async function(req, res, next){
     let userID = getUserID(req.cookies);
     let cart = await db.getCart(userID);
     let reqCartItem = req.body.cartItem
-    let pushed = false;
+    let itemAdded = false;
     cart.array.forEach(element => {
         if (element['id'] === reqCartItem['id']){
-            element['quantity'] += reqCartItem['id']
-            pushed = true;
+            element['quantity'] += parseInt(reqCartItem['quantity']);
+            itemAdded = true;
         }
     });
-    if(pushed === false){
+    if(itemAdded === false){
         cart.push(reqCartItem);
     }
     let result = await db.addToCart(userID, cartItem);
