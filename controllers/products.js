@@ -3,7 +3,6 @@ let uuid = require('uuid');
 
 
 createProduct =  async function(req, res, next){
-    console.log(req.body);
 
     let reqName = req.body.name;
     let reqDescription = req.body.description;
