@@ -1,4 +1,6 @@
 const path = require("path")
+let db = require("../db/index");
+
 
 homepage = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/home.html"));
@@ -17,6 +19,10 @@ registerfarmerpage = function (req, res, next) {
 }
 showFarmer = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/product.html"));
+}
+
+showCart = async function (req, res, next) {
+    let cart = db.getCart;
 }
 
 module.exports = {
