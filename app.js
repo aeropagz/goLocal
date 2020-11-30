@@ -27,11 +27,4 @@ app.use(express.static(__dirname + "/public"));
 
 app.use("/", router);
 
-const students = ["Elie", "Matt", "Joel", "Michael"];
-
-app.get("/students", (req, res) => {
-  return res.json(students);
-});
-
-
 module.exports = app;

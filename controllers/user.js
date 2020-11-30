@@ -7,21 +7,9 @@ let uuid = require('uuid');
 
 let db = require("../db/index");
 
-
 dotenv.config();
 
 const saltRounds = 1;
-
-showLogin = function (req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/login.html"));
-}
-showCustRegister = function (req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/custRegister.html"));
-}
-
-showFarmRegister = function (req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/user/farmRegister.html"));
-}
 
 
 farmRegister = async function (req, res, next) {
@@ -33,7 +21,6 @@ farmRegister = async function (req, res, next) {
     let reqPayment = req.body.payment;
 
     let result = await db.validateLicense(reqName, reqLicense);
-    console.log(result);
     if (result['result'] === "positive") {
         bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
             let user = {
@@ -56,13 +43,13 @@ farmRegister = async function (req, res, next) {
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                 res.cookie('myToken', token);
-                res.status(201).json({"result":"succes"});
+                res.status(201).json({"result":"success"});
             });
 
         });
-    } else
+    } else{
         res.sendStatus(500);
-
+    }
 
 
 }
@@ -100,8 +87,6 @@ custRegister = function (req, res, next) {
 login = async function (req, res, next) {
     let reqUsername = req.body.username;
     let reqPassword = req.body.password;
-    console.log(reqUsername, reqPassword);
-    console.log(req.body);
 
     let user = await db.findUser(reqUsername);
     user = user[0];
@@ -117,25 +102,49 @@ login = async function (req, res, next) {
                     res.cookie('myToken', token);
                     res.status(202).redirect('/');
             } else{
-                res.redirect(304, '/user/login');
+                res.redirect('/login');
             }
         });
     } else{
-        res.redirect(305, "/user/login");
+        res.redirect("/login");
     }
 }
 
-showSecret = function (req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/secret.html"));
+getCart = async function(req, res, next){
+    let userID = getUserID(req.cookies);
+    let cart = await db.getCart(userID);
+    res.json(cart);
+}
+
+addToCart = async function(req, res, next){
+    let userID = getUserID(req.cookies);
+    let cart = await db.getCart(userID);
+    let reqCartItem = req.body.cartItem
+    let itemAdded = false;
+    cart.array.forEach(element => {
+        if (element['id'] === reqCartItem['id']){
+            element['quantity'] += parseInt(reqCartItem['quantity']);
+            itemAdded = true;
+        }
+    });
+    if(itemAdded === false){
+        cart.push(reqCartItem);
+    }
+    let result = await db.addToCart(userID, cartItem);
+    res.json([result, cart]);
+}
+
+getUserID = function(cookies){
+    return JSON.parse(Buffer.from(cookies['myToken'].split('.')[1], 'base64').toString())['id'];
 }
 
 
 module.exports = {
-    showCustRegister,
-    showLogin,
-    showFarmRegister,
     farmRegister,
     custRegister,
     login,
-    showSecret
+    getCart,
+    addToCart
+
+
 }
