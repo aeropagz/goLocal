@@ -8,8 +8,10 @@ const url = "mongodb://goLocalAdmin:goLocalAdminPass@" + host + ":" + port + "/"
 let _db;
 
 async function connectToServer() {
+  console.log("try connect DB");
   try {
     if (_db) {
+      console.log("db")
       return _db;
     }
     const client = await MongoClient.connect(url, {

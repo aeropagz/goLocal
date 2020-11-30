@@ -1,45 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="de-DE">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="../js/logout.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Nesseccary CSS Files -->
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+
+    <!-- Title for the page can be changed here -->
+    <title>Registration Page</title>
+
+    <link rel="icon" type="image/png" href="./assets/images/favicon.ico">
+
+    <!--My JS file-->
+    <script src="./js/index.js"></script>
+
 </head>
-<body>
-    <form id="login-form" class="form" action="/products/create" method="post">
-        <h3 class="text-center text-info">Product</h3>
-        <div class="form-group">
-            <label for="username" class="text-info">Name:</label><br>
-            <input type="text" name="name" id="username" class="form-control">
+
+<body class="bodyClass blackColor">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-ligh offset-md-2" id="navbar1">
+        <a class="navbar-brand whiteColor" href="">GoLocal</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <select class="navbar-brand region ml-auto" id="location">
+            <option value="Baden-Wüttemberg">Baden-Wüttemberg</option>
+            <option value="Bayern">Bayern</option>
+            <option value="Berlin">Berlin</option>
+            <option value="Brandenburg">Brandenburg</option>
+            <option value="Bremen">Bremen</option>
+            <option value="Hamburg">Hamburg</option>
+            <option value="Hessen">Hessen</option>
+            <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
+            <option value="Niedersachsen">Niedersachsen</option>
+            <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
+            <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+            <option value="Saarland">Saarland</option>
+            <option value="Sachsen">Sachsen</option>
+            <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+            <option value="Schleswig-Holstein" selected>Schleswig-Holstein</option>
+            <option value="Thueringen">Thueringen</option>
+        </select>
+        
+        <a href="#" class="navbar-btn btn-info btn-sm active ml-4" role="button" aria-pressed="true" onclick="logout()">Logout</a>
         </div>
-        <div class="form-group">
-            <label for="description" class="text-info">description:</label><br>
-            <input type="text" name="description" id="password" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="description" class="text-info">quantity:</label><br>
-            <input type="text" name="quantity" id="password" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="price" class="text-info">price:</label><br>
-            <input type="text" name="price" id="password" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="mfg-date" class="text-info">mfg-date:</label><br>
-            <input type="text" name="manufactureDate" id="password" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="exp-date" class="text-info">exp-date:</label><br>
-            <input type="text" name="expiryDate" id="password" class="form-control">
-        </div>
-        <div class="form-group">
-            <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
-            <div id="register-link" class="mt-2">
-                <a href="register" class="text-info">Register here</a>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <form  class="form" action="/products/create" method="post">
+                        <h3 class="text-center text-info">Product</h3>
+                        <div class="form-group">
+                            <label for="username" class="text-info">Name:</label><br>
+                            <input type="text" name="name" id="username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="text-info">description:</label><br>
+                            <input type="text" name="description" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="text-info">quantity:</label><br>
+                            <input type="text" name="quantity" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="text-info">price:</label><br>
+                            <input type="text" name="price" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="mfg-date" class="text-info">mfg-date:</label><br>
+                            <input type="text" name="manufactureDate" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="exp-date" class="text-info">exp-date:</label><br>
+                            <input type="text" name="expiryDate" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                            <div id="register-link" class="mt-2">
+                                <a href="register" class="text-info">Register here</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
 
-        <button onclick="logout()">Logout</button>
 </body>
 </html>

@@ -50,7 +50,7 @@ function createContent(products, location) {
         farmers[product.farmerID]["location"] = product["farmer"]["location"];
         farmers[product.farmerID]["product"].push(product);
     }
-    console.log("farmers: " + JSON.stringify(farmers));
+    console.log("farmers: " + JSON.stringify(farmers, null, 2));
 
     let content = "";
     for (let key in farmers) {
@@ -58,25 +58,29 @@ function createContent(products, location) {
         if (location != farmer["location"]) {
             continue;
         }
-        content += `<div class="col-sm-4">
-    <div class="card" style="width: 20rem;"> 
-            <div class="card-header ">
-                `+ farmer.name + `
-            </div>
-                <div class="card-group">`
+        content += `<div class="col-lg">
+                        <div class="card lg-4"> 
+                            <div class="card-header ">
+                                 `+ farmer.name + `
+                            </div>
+                            <div class="card-group">`
         for (var i = 0; i < farmer["product"].length; i++) {
             product = farmer["product"][i];
-            content += `<div class="card">
+            content += `<div class="card col-md" >
                     <div class="card-body">
-                    <p class="card-text"> Name:`+ product["name"] + `</p>
-                    <p class="card-text"> Price:`+ product["price"] + `</p>   
+                    <h4 class="card-text">`+ product["name"] + `</h3>
+                    <p class="card-text"> Price: `+ product["price"] + `</p>
+                    <p class="card-text"> MFG: `+ product["mfg-date"] + `</p>  
+                    <p class="card-text"> Expiry: `+ product["exp-date"] + `</p> 
+                    <p class="card-text"> Description: `+ product["description"] + `</p> 
+
                     </div>   
                 </div>`
         }
         content +=
             `</div>
                     <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer Profile</a>
+                    <a href="#" class="btn btn-info active" role="button" aria-pressed="true">Go to farmer Profile</a>
                     </div>
                  </div>   
             </div>`

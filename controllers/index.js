@@ -21,9 +21,7 @@ showFarmer = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/product.html"));
 }
 
-showCart = async function (req, res, next) {
-    let cart = db.getCart;
-}
+
 
 module.exports = {
     homepage,
