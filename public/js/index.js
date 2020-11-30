@@ -13,6 +13,7 @@ function getProducts() {
             // 'response' is what you get back from the script/server
             // usually you want to format your response and spit it out to the page
             console.log("Products : " + JSON.stringify(response));
+            createContent(response);
         })
         .fail(function (code, status) {
             // what you want to happen if the ajax request fails (404 error, timeout, etc.)
@@ -31,3 +32,17 @@ $(function () {
     console.log("ready!");
     getProducts();
 });
+
+function createContent(products) {
+    let farmers = {};
+    let product = {};
+    for (var i = 0; i <= products.length; i++) {
+        product = products[i];
+        if (!farmers.hasOwnProperty(product.farmerID)) {
+            farmers[product.farmerID] = { name: "", product: [] }
+        }
+        farmers[product.farmerID]["name"] = product["farmer"]["name"];
+        farmers[product.farmerID]["product"].push(product);
+    }
+    console.log(JSON.stringify(farmers));
+}

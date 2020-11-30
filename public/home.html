@@ -1,11 +1,9 @@
 <!-- <html>
 <header>
-    <script src="../js/logout.js"></script>
 </header>
 <body>
     <h1> Hello APP is working</h1>
 
-    <button onclick="logout()">Logout</button>
 </body>
 
 </html> -->
@@ -40,12 +38,14 @@
 
     <!--My JS file-->
     <script src="./js/index.js"></script>
+    <script src="./js/logout.js"></script>
+
 </head>
 
 <body class="bodyClass blackColor">
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-promary bg-secondary " id="navbar1">
-        <a class="navbar-brand" href="">
+        <a class="navbar-brand whiteColor" href="">
             GoLocal
         </a>
 
@@ -73,9 +73,7 @@
         <a href="#" class="navbar-btn btn-primary btn-lg active" role="button" aria-pressed="true">Cart
         </a>
 
-        <a href="logout" class="navbar-btn btn-primary btn-lg active" role="button" aria-pressed="true">Log Out
-        </a>
-
+        <button onclick="logout()">Logout</button>
     </nav>
 
 
@@ -87,202 +85,12 @@
     <hr style="height: 1px; background-color: black;" />
 
 
-    <!-- div class="container2 mt-4 mb-4 col-md-8 offset-md-1"></div -->
-    <div class="row offset-md-1">
-        <div class="col-sm-4">
-            <div class="card" style="width: 20rem;">
-                <div class="card-header ">
-                    Farmer1
-                </div>
-                <div class="card-group">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product1</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product2</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer
-                        Profile</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card" style="width: 20rem;">
-                <div class="card-header ">
-                    Farmer2
-                </div>
-                <div class="card-group">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product1</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product2</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer
-                        Profile</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card" style="width: 20rem;">
-                <div class="card-header ">
-                    Farmer3
-                </div>
-                <div class="card-group">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product1</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product2</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer
-                        Profile</a>
-                </div>
-            </div>
-        </div>
+    <div class="container2 mt-4 mb-4 col-md-8 offset-md-1">
+        <div class="row" id="content">
 
+        </div>
     </div>
 
-    <hr style="height: 1px; background-color: white;">
-
-    <div class="row offset-md-1">
-        <div class="col-sm-4">
-            <div class="card" style="width: 20rem;">
-                <div class="card-header ">
-                    Farmer4
-                </div>
-                <div class="card-group">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product1</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product2</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer
-                        Profile</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card" style="width: 20rem;">
-                <div class="card-header ">
-                    Farmer5
-                </div>
-                <div class="card-group">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product1</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product2</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer
-                        Profile</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card" style="width: 20rem;">
-                <div class="card-header ">
-                    Farmer6
-                </div>
-                <div class="card-group">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product1</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product2</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text"> Product3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer
-                        Profile</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
     <!--/div-->
 
     <hr style="height: 1px; background-color: black;">
