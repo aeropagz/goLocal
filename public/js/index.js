@@ -58,12 +58,12 @@ function createContent(products, location) {
         if (location != farmer["location"]) {
             continue;
         }
-        content += `<div class="col-lg">
+        content += `<div class="col-md-12 col-lg-6">
                         <div class="card"> 
                             <div class="card-header ">
                                  `+ farmer.name + `
                             </div>
-                            <div class="card-group">`
+                        <div class="card-group">`
         for (var i = 0; i < farmer["product"].length; i++) {
             product = farmer["product"][i];
             content += `
