@@ -145,6 +145,4 @@ module.exports = {
     login,
     getCart,
     addToCart
-
-
 }
