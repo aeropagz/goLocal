@@ -8,10 +8,10 @@ let products = require("./products");
 let authenticate = require("../middleware/authenticate");
 let checkRole = require("../middleware/checkRole");
 
+
 //Homepage Routes
 
-
-router.get("/", [authenticate.authenticateJWT, checkRole.checkRoleCust], index.homepage); 
+router.get("/", [authenticate.authenticateJWT, checkRole.checkRoleCust], index.homepage);
 router.get("/login", index.loginpage);
 
 router.get("/register", index.registerpage);

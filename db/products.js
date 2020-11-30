@@ -1,11 +1,11 @@
 let mongoUtil = require("./mongoUtil");
 
 
-createProduct = function (productObj, callback){
+createProduct = function (productObj, callback) {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-                db.collection("products").insertOne(productObj, callback);
+            db.collection("products").insertOne(productObj, callback);
         }
         catch (error) {
             throw error;
@@ -18,7 +18,25 @@ getAllProducts = async function () {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-            let products = await db.collection("products").find().toArray();
+            let products = await db.collection("products").aggregate([
+                {
+                    $lookup:
+                    {
+                        from: "users",
+                        localField: "farmerID",
+                        foreignField: "id",
+                        as: "farmer"
+                    }
+                },
+                {
+                    $unwind: "$farmer"
+                },
+                {
+                    $project: {
+                        "farmer.password": 0
+                    }
+                }
+            ]).toArray();
             return products;
         }
         catch (error) {
@@ -48,7 +66,7 @@ getProduct = async function (productID) {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-            let product = await db.collection("products").findOne({"id": productID});
+            let product = await db.collection("products").findOne({ "id": productID });
             return product;
         }
         catch (error) {
