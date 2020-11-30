@@ -13,7 +13,7 @@ function getProducts() {
             // 'response' is what you get back from the script/server
             // usually you want to format your response and spit it out to the page
             console.log("Products : " + JSON.stringify(response));
-            createContent(response);
+            createContent(response.products);
         })
         .fail(function (code, status) {
             // what you want to happen if the ajax request fails (404 error, timeout, etc.)
@@ -36,7 +36,7 @@ $(function () {
 function createContent(products) {
     let farmers = {};
     let product = {};
-    for (var i = 0; i <= products.length; i++) {
+    for (var i = 0; i < products.length; i++) {
         product = products[i];
         if (!farmers.hasOwnProperty(product.farmerID)) {
             farmers[product.farmerID] = { name: "", product: [] }
@@ -44,5 +44,33 @@ function createContent(products) {
         farmers[product.farmerID]["name"] = product["farmer"]["name"];
         farmers[product.farmerID]["product"].push(product);
     }
-    console.log(JSON.stringify(farmers));
+    console.log("farmers: " + JSON.stringify(farmers));
+
+    let content = "";
+    for (let key in farmers) {
+        let farmer = farmers[key]
+        content += `<div class="col-sm-4">
+    <div class="card" style="width: 20rem;"> 
+            <div class="card-header ">
+                `+ farmer.name + `
+            </div>
+                <div class="card-group">`
+        for (var i = 0; i < farmer["product"].length; i++) {
+            product = farmer["product"][i];
+            content += `<div class="card">
+                    <div class="card-body">
+                    <p class="card-text"> Name:`+ product["name"] + `</p>
+                    <p class="card-text"> Price:`+ product["price"] + `</p>   
+                    </div>   
+                </div>`
+        }
+        content +=
+            `</div>
+                    <div class="card-footer">
+                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to farmer Profile</a>
+                    </div>
+                 </div>   
+            </div>`
+    }
+    $("#content").html(content);
 }
