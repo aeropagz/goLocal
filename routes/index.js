@@ -4,7 +4,6 @@ let router = express.Router();
 let index = require("../controllers/index");
 let user = require("./user");
 let farmer = require("./farmer")
-let transaction = require("./transaction");
 let products = require("./products");
 let authenticate = require("../middleware/authenticate");
 let checkRole = require("../middleware/checkRole");
@@ -23,7 +22,6 @@ router.get("/farmer", [authenticate.authenticateJWT, checkRole.checkRoleFarmer],
 router.use("/farmer", farmer);
 router.use("/user", user);
 router.use("/products", products);
-router.use("/transaction", transaction);
 
 
 
