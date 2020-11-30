@@ -102,11 +102,11 @@ login = async function (req, res, next) {
                     res.cookie('myToken', token);
                     res.status(202).redirect('/');
             } else{
-                res.redirect(304, '/user/login');
+                res.redirect('/login');
             }
         });
     } else{
-        res.redirect(305, "/user/login");
+        res.redirect("/login");
     }
 }
 
@@ -144,6 +144,7 @@ module.exports = {
     custRegister,
     login,
     getCart,
+    addToCart
 
 
 }
