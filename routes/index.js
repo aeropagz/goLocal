@@ -13,6 +13,7 @@ let checkRole = require("../middleware/checkRole");
 
 router.get("/", [authenticate.authenticateJWT, checkRole.checkRoleCust], index.homepage);
 router.get("/login", index.loginpage);
+router.get("/cart", [authenticate.authenticateJWT, checkRole.checkRoleCust], index.cart);
 
 router.get("/register", index.registerpage);
 router.get("/registerfarmer", index.registerfarmerpage);
