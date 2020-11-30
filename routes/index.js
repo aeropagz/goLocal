@@ -12,9 +12,7 @@ let checkRole = require("../middleware/checkRole");
 
 //Homepage Routes
 
-
-// router.get("/", [authenticate.authenticateJWT, checkRole.checkRoleCust], index.homepage);
-router.get("/", index.homepage);
+router.get("/", [authenticate.authenticateJWT, checkRole.checkRoleCust], index.homepage);
 router.get("/login", index.loginpage);
 
 router.get("/register", index.registerpage);

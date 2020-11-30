@@ -1,6 +1,5 @@
 function getProducts() {
     let location = $("#location").val();
-
     // now for the big event
     $.ajax({
         'url': '/products',
@@ -13,7 +12,7 @@ function getProducts() {
             // 'response' is what you get back from the script/server
             // usually you want to format your response and spit it out to the page
             console.log("Products : " + JSON.stringify(response));
-            createContent(response.products);
+            createContent(response.products, location);
         })
         .fail(function (code, status) {
             // what you want to happen if the ajax request fails (404 error, timeout, etc.)
@@ -31,17 +30,24 @@ $(function () {
     // Handler for .ready() called.
     console.log("ready!");
     getProducts();
+
+
+    $('#location').on('change', function () {
+        $("#content").html("");
+        getProducts();
+    });
 });
 
-function createContent(products) {
+function createContent(products, location) {
     let farmers = {};
     let product = {};
     for (var i = 0; i < products.length; i++) {
         product = products[i];
         if (!farmers.hasOwnProperty(product.farmerID)) {
-            farmers[product.farmerID] = { name: "", product: [] }
+            farmers[product.farmerID] = { name: "", product: [], location: "" }
         }
         farmers[product.farmerID]["name"] = product["farmer"]["name"];
+        farmers[product.farmerID]["location"] = product["farmer"]["location"];
         farmers[product.farmerID]["product"].push(product);
     }
     console.log("farmers: " + JSON.stringify(farmers));
@@ -49,6 +55,9 @@ function createContent(products) {
     let content = "";
     for (let key in farmers) {
         let farmer = farmers[key]
+        if (location != farmer["location"]) {
+            continue;
+        }
         content += `<div class="col-sm-4">
     <div class="card" style="width: 20rem;"> 
             <div class="card-header ">
