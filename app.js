@@ -20,7 +20,7 @@ app.use(cors());
 app.use(cookieParser());
 
 //Connect to DataBase
-mongoUtil.connectToServer();
+// mongoUtil.connectToServer();
 
 //Static data to be exposed
 app.use(express.static(__dirname + "/public"));
