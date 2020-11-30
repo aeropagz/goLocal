@@ -7,7 +7,7 @@ const authenticateJWT = (req, res, next) => {
     console.log(myToken);
 
     if (myToken) {
-       
+
         jwt.verify(myToken, process.env.TOKEN_SECRET, (err, user) => {
             if (err) {
                 return res.sendStatus(403);
@@ -21,6 +21,6 @@ const authenticateJWT = (req, res, next) => {
     }
 };
 
-module.exports={
+module.exports = {
     authenticateJWT
 };
