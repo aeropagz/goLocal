@@ -3,14 +3,16 @@ let uuid = require('uuid');
 
 
 createProduct =  async function(req, res, next){
+    console.log(req.body);
+
     let reqName = req.body.name;
     let reqDescription = req.body.description;
     let reqQuantity = req.body.quantity;
     let reqPrice = req.body.price;
     let reqManufactureDate = req.body.manufactureDate;
     let reqExpiryDate = req.body.expiryDate;
-    let reqDeliveryMethod = req.body.deliveryMethod;
-    let reqPaymentMethod = req.body.paymentMethod;
+    let reqDeliveryMethod = req.body.shipping;
+    let reqPaymentMethod = req.body.payment;
     let farmerID = req.user.id;
 
     let productObj = {
