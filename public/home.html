@@ -60,10 +60,16 @@
             <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
             <option value="Schleswig-Holstein" selected>Schleswig-Holstein</option>
             <option value="Thueringen">Thueringen</option>
-        </select>
-        <a href="#" class="navbar-btn btn-info btn-sm active ml-4" role="button" aria-pressed="true">Cart</a>
+        </select><ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link navLinks text-info">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link navLinks text-info" onclick="logout()">Logout</a>
+            </li>
+                
+        </ul>
         
-        <a href="#" class="navbar-btn btn-info btn-sm active ml-4" role="button" aria-pressed="true" onclick="logout()">Logout</a>
         </div>
     </nav>
 
@@ -84,11 +90,12 @@
 
     <!--/div-->
 
-    <hr style="height: 1px; background-color: black;">
+    
 
     <div class="footer mt-4 mb-4 col-md-8 offset-md-2 ">
+        <hr style="height: 1px; background-color: black;">
         <h4 class="text-center text-black pt-1">Reference to current Corona guidelines:</h4>
-        <p class="text-center text-black pt-1"> Klick here for <a
+        <p class="text-center text-black pt-1"> click here for <a
                 href="https://www.bundesregierung.de/breg-de/themen/coronavirus/corona-massnahmen-1734724"
                 target="_blank">information</a>
         <p>
