@@ -50,6 +50,6 @@ function createProduct() {
             // what you want to happen if the ajax request fails (404 error, timeout, etc.)
             // 'code' is the numeric code, and 'status' is the text explanation for the error
             // I usually just output some fancy error messages
-            alert("User creation failed.");
+            alert("Product creation failed.");
         })
 }

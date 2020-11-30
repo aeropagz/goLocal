@@ -59,14 +59,15 @@ function createContent(products, location) {
             continue;
         }
         content += `<div class="col-lg">
-                        <div class="card lg-4"> 
+                        <div class="card"> 
                             <div class="card-header ">
                                  `+ farmer.name + `
                             </div>
                             <div class="card-group">`
         for (var i = 0; i < farmer["product"].length; i++) {
             product = farmer["product"][i];
-            content += `<div class="card col-md" >
+            content += `
+                    <div class="card" >
                     <div class="card-body">
                     <h4 class="card-text">`+ product["name"] + `</h3>
                     <p class="card-text"> Price: `+ product["price"] + `</p>
