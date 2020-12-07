@@ -42,8 +42,10 @@ farmRegister = async function (req, res, next) {
                     "location": user.location,
                 }
                 let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-                res.cookie('myToken', token);
-                res.status(201).json({"result":"success"});
+                res.json({"id": user.id,
+                "name": user.name,
+                "role": user.role,
+                "token": token});
             });
 
         });
@@ -77,8 +79,10 @@ custRegister = function (req, res, next) {
                 "role": user.role,
             }
             let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-            res.cookie('myToken', token);
-            res.status(201).json({"result":"succes"});
+            res.json({"id": user.id,
+            "name": user.name,
+            "role": user.role,
+            "token": token});
 
         });
     });
@@ -99,14 +103,16 @@ login = async function (req, res, next) {
                         "role": user.role,
                     }
                     let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-                    res.cookie('myToken', token);
-                    res.status(202).redirect('/');
+                    res.json({"id": user.id,
+                            "name": user.name,
+                            "role": user.role,
+                            "token": token});
             } else{
-                res.redirect('/login');
+                res.json({"error": "wrong password"});
             }
         });
     } else{
-        res.redirect("/login");
+        res.json({"error": "wrong username"});
     }
 }
 
