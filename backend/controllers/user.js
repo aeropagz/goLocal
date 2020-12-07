@@ -93,26 +93,21 @@ login = async function (req, res, next) {
     let reqPassword = req.body.password;
 
     let user = await db.findUser(reqUsername);
-    user = user[0];
-    if(user){
-        bcrypt.compare(reqPassword, user.password, function (err, result){
-            if (result === true){
-                    let jwtPayload = {
-                        "id": user.id,
-                        "name": user.name,
-                        "role": user.role,
-                    }
-                    let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
-                    res.json({"id": user.id,
-                            "name": user.name,
-                            "role": user.role,
-                            "token": token});
-            } else{
-                res.json({"error": "wrong password"});
-            }
-        });
+    
+    if(user && await bcrypt.compare(reqPassword, user.password)){
+        let jwtPayload = {
+            "id": user.id,
+            "name": user.name,
+            "role": user.role,
+        }
+        let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+        res.json({"id": user.id,
+                "name": user.name,
+                "role": user.role,
+                "token": token});
     } else{
-        res.json({"error": "wrong username"});
+        res.status(500);
+        res.send('Wrong password or username')
     }
 }
 

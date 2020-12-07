@@ -18,7 +18,7 @@ findUser = async function (username) {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-            let user = await db.collection("users").find({ "username": username}).toArray();
+            let user = await db.collection("users").findOne({ "username": username});
             return user;
         }
         catch (error) {

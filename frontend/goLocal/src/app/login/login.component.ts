@@ -38,8 +38,11 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = '/';
+          const returnUrl = '/shop';
           this.router.navigateByUrl(returnUrl);
+        },
+        error: error => {
+          this.loading = false;
         }
       });
   }

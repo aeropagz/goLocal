@@ -22,7 +22,7 @@ export class AccountService {
   }
 
   login(username: string, password: string){
-    return this.http.post<User>('localhost:8080/users/login', {username, password})
+    return this.http.post<User>('http://localhost:8080/user/login', {username, password})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
