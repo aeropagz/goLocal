@@ -13,86 +13,58 @@ const saltRounds = 1;
 
 
 farmRegister = async function (req, res, next) {
-    let reqUsername = req.body.username;
+    let reqEmail = req.body.email;
     let reqPassword = req.body.password;
     let reqName = req.body.name;
     let reqLicense = req.body.license;
     let reqLocation = req.body.location;
-    let reqPayment = req.body.payment;
 
     let result = await db.validateLicense(reqName, reqLicense);
-    if (result['result'] === "positive") {
-        bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
-            let user = {
-                id: uuid.v4(),
-                name: reqName,
-                password: hash,
-                role: "farmer",
-                username: reqUsername,
-                "license-key": reqLicense,
-                location: reqLocation,
-                "payment_method": reqPayment,
-            };
-            db.createUser(user, function (err, result) {
-                if (err) throw err;
-                let jwtPayload = {
-                    "id": user.id,
-                    "name": user.name,
-                    "role": user.role,
-                    "location": user.location,
-                }
-                let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-                res.json({"id": user.id,
-                "name": user.name,
-                "role": user.role,
-                "token": token});
-            });
-
-        });
-    } else{
-        res.sendStatus(500);
+    if (result["result"] === "positive") {
+        let hash = await bcrypt.hash(reqPassword, saltRounds)
+        let user = {
+            id: uuid.v4(),
+            name: reqName,
+            password: hash,
+            role: "farmer",
+            email: reqEmail,
+            "license-key": reqLicense,
+            location: reqLocation,
+        };
+        await db.createUser(user);
+        res.json({"result": "success"});
+    } else {
+        res.Status(500);
+        res.send("License not valid");
     }
 
 
 }
 
 
-custRegister = function (req, res, next) {
-    let reqUsername = req.body.username;
+custRegister =  async function (req, res, next) {
+    let reqEmail = req.body.email;
     let reqPassword = req.body.password;
     let reqName = req.body.name;
 
-    bcrypt.hash(reqPassword, saltRounds, function (err, hash) {
-        let user = {
-            id: uuid.v4(),
-            name: reqName,
-            password: hash,
-            role: "customer",
-            username: reqUsername,
-            cart: []
-        };
-        db.createUser(user, function (err, result) {
-            if (err) throw err;
-            let jwtPayload = {
-                "id": user.id,
-                "name": user.name,
-                "role": user.role,
-            }
-            let token = jwt.sign(jwtPayload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-            res.json({"id": user.id,
-            "name": user.name,
-            "role": user.role,
-            "token": token});
-
-        });
-    });
+    let hash = await bcrypt.hash(reqPassword, saltRounds) 
+    let user = {
+        id: uuid.v4(),
+        name: reqName,
+        password: hash,
+        role: "customer",
+        email: reqEmail,
+        cart: []
+    };
+    await db.createUser(user)
+    res.json({"result": "success"});
 }
 
 login = async function (req, res, next) {
-    let reqUsername = req.body.username;
+    let reqEmail = req.body.username;
     let reqPassword = req.body.password;
 
-    let user = await db.findUser(reqUsername);
+    let user = await db.findUser(reqEmail);
     
     if(user && await bcrypt.compare(reqPassword, user.password)){
         let jwtPayload = {

@@ -1,0 +1,23 @@
+<div class="container2 mt-4 mb-4 col-md-8 offset-md-2 ">
+    <div class="mt-4">
+        <div>
+            <h3 class="text-center text-info">Registration</h3>
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div *ngIf="farmer">
+                                <app-register-farmer></app-register-farmer>
+                            </div>
+                            <div *ngIf="!farmer">
+                                <app-register-customer></app-register-customer>
+                            </div>
+
+                            <button class="btn btn-info" (click)="farmer = !farmer">Register as a {{farmer ? 'customer' : 'farmer'}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

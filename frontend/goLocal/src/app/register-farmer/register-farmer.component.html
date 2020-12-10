@@ -1,0 +1,62 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="name" class="text-info">Name:</label><br>
+        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required>
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="text-info">Email:</label><br>
+        <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required>
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="text-info">Password:</label><br>
+        <input type="password" formControlName="password" id="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="location" class="text-info">Location:</label><br>
+        <select class="form-control custom-select-sm" data-dropup-auto="false" formControlName="location" [ngClass]="{ 'is-invalid': submitted && f.location.errors }" required>
+            <option value="Baden-Wüttemberg" selected>Baden-Wüttemberg</option>
+            <option value="Bayern">Bayern</option>
+            <option value="Berlin">Berlin</option>
+            <option value="Brandenburg">Brandenburg</option>
+            <option value="Bremen">Bremen</option>
+            <option value="Hamburg">Hamburg</option>
+            <option value="Hessen">Hessen</option>
+            <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
+            <option value="Niedersachsen">Niedersachsen</option>
+            <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
+            <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+            <option value="Saarland">Saarland</option>
+            <option value="Sachsen">Sachsen</option>
+            <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+            <option value="Schleswig-Holstein">Schleswig-Holstein</option>
+            <option value="Thueringen">Thueringen</option>
+        </select>
+        <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+            <div *ngIf="f.location.errors.required">Location is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="licenseKey" class="text-info">License Key:</label><br>
+        <input type="text" formControlName="license" id="licenseKey" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.license.errors }" required>
+        <div *ngIf="submitted && f.license.errors" class="invalid-feedback">
+            <div *ngIf="f.license.errors.required">License is required</div>
+        </div>
+        <button type="button" class="btn btn-info btn-md validate" value="validate">Validate Key</button>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-info">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Register
+        </button>
+    </div>
+</form>

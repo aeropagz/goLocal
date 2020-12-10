@@ -1,11 +1,11 @@
 let mongoUtil = require("./mongoUtil");
 
 
-createUser = function (userObj, callback){
+createUser = async function (userObj){
     let db = mongoUtil.getDb();
     if (db) {
         try {
-                db.collection("users").insertOne(userObj, callback);
+                await db.collection("users").insertOne(userObj);
         }
         catch (error) {
             throw error;
@@ -14,11 +14,11 @@ createUser = function (userObj, callback){
     else return ({ "error": "Database not accessible" });
 }
 
-findUser = async function (username) {
+findUser = async function (email) {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-            let user = await db.collection("users").findOne({ "username": username});
+            let user = await db.collection("users").findOne({ "email": email});
             return user;
         }
         catch (error) {

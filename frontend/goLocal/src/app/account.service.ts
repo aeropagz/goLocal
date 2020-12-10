@@ -29,4 +29,10 @@ export class AccountService {
         return user;
       }));
   }
+  registerUser(user: User){
+    return this.http.post('http://localhost:8080/user/register/customer', user);
+  }
+  registerFarmer(user: User){
+    return this.http.post('http://localhost:8080/user/register/farmer', user);
+  }
 }
