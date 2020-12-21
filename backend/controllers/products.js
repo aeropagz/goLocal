@@ -26,10 +26,12 @@ createProduct =  async function(req, res, next){
         "delivery-method": reqDeliveryMethod,
         "payment-methond": reqPaymentMethod
     }
-    db.createProduct(productObj, function(err, result){
-        if (err) throw err;
-        res.json({"result": "success"})
-    });
+    try {
+        await db.createProduct(productObj);
+        res.json({"result": "success"});
+    }catch {
+        res.json({"result": "failed"});
+    }
 }
 
 updateProductQuantity = async function(productName, farmerID, quantity){

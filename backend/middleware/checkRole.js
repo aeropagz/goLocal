@@ -3,14 +3,14 @@ let checkRoleFarmer = function(req, res, next){
         
         next();
     } else {
-        res.redirect('/');
+        res.sendStatus(401);
     }
 }
 let checkRoleCust = function(req, res, next){
     if (req.user.role ==="customer"){
         next();
     } else {
-        res.redirect('/farmer');
+        res.sendStatus(401);
     }
 }
 

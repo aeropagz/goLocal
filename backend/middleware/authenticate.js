@@ -1,21 +1,21 @@
-let cookieParser = require('cookie-parser');
 let jwt = require('jsonwebtoken');
 
 
 const authenticateJWT = (req, res, next) => {
-    const myToken = req.cookies['myToken'];
-    if (myToken) {
+    const authHeader = req.headers.authorization;
+    if (authHeader) {
+        const myToken = authHeader.split(' ')[1];
 
         jwt.verify(myToken, process.env.TOKEN_SECRET, (err, user) => {
             if (err) {
-                return res.redirect('/login');
+                res.sendStatus(401);
             }
 
             req.user = user;
             next();
         });
     } else {
-        res.redirect('/login');
+        res.sendStatus(401);
     }
 };
 

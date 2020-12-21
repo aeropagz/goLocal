@@ -18,7 +18,7 @@ export class RegisterCustomerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountSerice: AccountService
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class RegisterCustomerComponent implements OnInit {
       return;
     }
     this.loading = true; 
-    this.accountSerice.registerUser(this.form.value)
+    this.accountService.registerUser(this.form.value)
       .pipe(first())
       .subscribe({
         next: ()=> {
@@ -46,6 +46,6 @@ export class RegisterCustomerComponent implements OnInit {
         error: error => {
           this.loading = false;
         }
-      })
+      });
   }
 }

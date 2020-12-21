@@ -1,11 +1,12 @@
 let mongoUtil = require("./mongoUtil");
 
 
-createProduct = function (productObj, callback) {
+createProduct = async function (productObj) {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-            db.collection("products").insertOne(productObj, callback);
+            await db.collection("products").insertOne(productObj);
+            await db.collection("users").updateOne({ "id": productObj.farmerID}, {$push:{products: productObj.productID}});
         }
         catch (error) {
             throw error;

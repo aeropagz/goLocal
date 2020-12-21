@@ -30,6 +30,7 @@ farmRegister = async function (req, res, next) {
             email: reqEmail,
             "license-key": reqLicense,
             location: reqLocation,
+            products: []
         };
         await db.createUser(user);
         res.json({"result": "success"});
