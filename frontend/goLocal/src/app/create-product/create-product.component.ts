@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { ProductsService } from "../products.service";
 import { error } from '@angular/compiler/src/util';
+import { requireCheckboxes } from '../validatorFuncs';
 
 @Component({
   selector: 'app-create-product',
@@ -31,17 +32,30 @@ export class CreateProductComponent implements OnInit {
       price: ['', Validators.required],
       manufactureDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
-      
+      paymentOptions: this.formBuilder.group({
+        cashOnDelivery: [''],
+        paypal: [''],
+      }),
+      deliveryOptions: this.formBuilder.group({
+        ship: [''],
+        pickUp: [''],
+      }),
     });
+    this.form.controls['paymentOptions'].setValidators(requireCheckboxes());
+    this.form.controls['deliveryOptions'].setValidators(requireCheckboxes());
   }
 
   get f(){ return this.form.controls; }
 
   onSubmit(): void {
     console.log("subbed");
+    console.log(this.f.deliveryOptions.errors);
+    
     
     this.submitted = true;
     if(this.form.invalid){
+      console.log("not valid");
+      
       return;
     }
     this.loading = true;
@@ -59,4 +73,6 @@ export class CreateProductComponent implements OnInit {
         }
       });
   }
+
+  
 }

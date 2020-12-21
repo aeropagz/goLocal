@@ -36,7 +36,7 @@
                     <input type="text" formControlName="price" id="price" placeholder="€ / Quantity" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.price.errors }">
                     <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
-                        <div *ngIf="f.name.price.required">Name is required</div>
+                        <div *ngIf="f.price.required">Name is required</div>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@
                     <input type="date" formControlName="manufactureDate" id="manufactureDate" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.manufactureDate.errors }">
                     <div *ngIf="submitted && f.manufactureDate.errors" class="invalid-feedback">
-                        <div *ngIf="f.name.manufactureDate.required">Name is required</div>
+                        <div *ngIf="f.manufactureDate.required">Name is required</div>
                     </div>
                 </div>
 
@@ -58,7 +58,42 @@
                     </div>
                 </div>
 
-                
+                <div class="form-group" formGroupName="paymentOptions">
+                    <div class="label">Check at least one checkbox <span class="highlight">*</span></div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" formControlName="cashOnDelivery"
+                            id="cod" [ngClass]="{ 'is-invalid': submitted && f.paymentOptions.errors }">
+                        <label class="custom-control-label" for="cod">Cash-On-Delivery</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" formControlName="paypal"
+                            id="paypal" [ngClass]="{ 'is-invalid': submitted && f.paymentOptions.errors }">
+                        <label class="custom-control-label" for="paypal">Paypal</label>
+                        <div class="invalid-feedback" *ngIf="submitted && f['paymentOptions'].errors &&
+                            f['paymentOptions'].errors.requireCheckboxesToBeChecked">
+                            At lest one Option must be checked
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" formGroupName="deliveryOptions">
+                    <div class="label">Check at least one checkbox <span class="highlight">*</span></div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" formControlName="ship"
+                            id="delivery" [ngClass]="{ 'is-invalid': submitted && f.deliveryOptions.errors }">
+                        <label class="custom-control-label" for="delivery">Delivery</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" formControlName="pickUp"
+                            id="pickUp" [ngClass]="{ 'is-invalid': submitted && f.deliveryOptions.errors }">
+                        <label class="custom-control-label" for="pickUp">Pick-up</label>
+                        <div class="invalid-feedback" *ngIf="submitted && f.deliveryOptions.errors &&
+                        f.deliveryOptions.errors.requireCheckboxesToBeChecked">
+                            At lest one Option must be checked
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="form-group">
                     <button [disabled]="loading" class="btn btn-info">
