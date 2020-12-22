@@ -6,25 +6,25 @@ createProduct =  async function(req, res, next){
 
     let reqName = req.body.name;
     let reqDescription = req.body.description;
-    let reqQuantity = req.body.quantity;
-    let reqPrice = req.body.price;
+    let reqQuantity = Math.abs(parseInt(req.body.quantity));
+    let reqPrice = Math.abs(parseInt(req.body.price));
     let reqManufactureDate = req.body.manufactureDate;
     let reqExpiryDate = req.body.expiryDate;
-    let reqDeliveryMethod = req.body.shipping;
-    let reqPaymentMethod = req.body.payment;
+    let reqDeliveryMethod = req.body.deliveryOptions;
+    let reqPaymentMethod = req.body.paymentOptions;
     let farmerID = req.user.id;
 
     let productObj = {
         id: uuid.v4(),
         name: reqName,
         description: reqDescription,
-        quantity: Math.abs(reqQuantity),
+        quantity: reqQuantity,
         farmerID: farmerID,
         price: reqPrice,
-        "mfg-date": reqManufactureDate,
-        "exp-date": reqExpiryDate,
-        "delivery-method": reqDeliveryMethod,
-        "payment-methond": reqPaymentMethod
+        manufactureDate: reqManufactureDate,
+        expiryDate: reqExpiryDate,
+        deliveryOptions: reqDeliveryMethod,
+        paymentOptions: reqPaymentMethod
     }
     try {
         await db.createProduct(productObj);

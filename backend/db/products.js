@@ -6,7 +6,7 @@ createProduct = async function (productObj) {
     if (db) {
         try {
             await db.collection("products").insertOne(productObj);
-            await db.collection("users").updateOne({ "id": productObj.farmerID}, {$push:{products: productObj.productID}});
+            await db.collection("users").updateOne({ "id": productObj.farmerID}, {$push:{products: productObj.id}});
         }
         catch (error) {
             throw error;

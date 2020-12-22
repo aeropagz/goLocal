@@ -33,12 +33,12 @@ export class CreateProductComponent implements OnInit {
       manufactureDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
       paymentOptions: this.formBuilder.group({
-        cashOnDelivery: [''],
-        paypal: [''],
+        cashOnDelivery: [false],
+        paypal: [false],
       }),
       deliveryOptions: this.formBuilder.group({
-        ship: [''],
-        pickUp: [''],
+        ship: [false],
+        pickUp: [false],
       }),
     });
     this.form.controls['paymentOptions'].setValidators(requireCheckboxes());

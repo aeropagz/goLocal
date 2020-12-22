@@ -13,6 +13,8 @@ import { RegisterFarmerComponent } from './register-farmer/register-farmer.compo
 import { RegisterCustomerComponent } from './register-customer/register-customer.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,8 @@ import { CreateProductComponent } from './create-product/create-product.componen
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+  
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
