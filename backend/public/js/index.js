@@ -69,7 +69,7 @@ function createContent(products, location) {
             content += `
                     <div class="card" >
                     <div class="card-body">
-                    <h4 class="card-text">`+ product["name"] + `</h3>
+                    <h4 class="card-text">`+ product["name"] + `</h4>
                     <p class="card-text"> Price: `+ product["price"] + `</p>
                     <p class="card-text"> MFG: `+ product["mfg-date"] + `</p>  
                     <p class="card-text"> Expiry: `+ product["exp-date"] + `</p> 

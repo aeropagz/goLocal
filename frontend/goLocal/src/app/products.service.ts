@@ -3,21 +3,22 @@ import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Observable, BehaviorSubject } from "rxjs";
 
-import { Product } from "./product";
+import { Product } from "./Product";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  private apiUrl = "http://localhost:8080/products"
+  private apiUrlProducts = "http://localhost:8080/products";
+  private apiUrlProductsFarmer = "http://localhost:8080/farmer/products";
 
   constructor(private http: HttpClient) { }
 
   createProduct(product: Product){
-    return this.http.post(this.apiUrl , product);
+    return this.http.post(this.apiUrlProducts , product);
   }
 
   getProductByFarmers(){
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrlProductsFarmer);
   }
 }

@@ -35,6 +35,9 @@ getAllFarmerWithProduct = async function () {
                 const product =  await allDbOperation.getProduct(productId);
                 farmer.products[productId] = product;
             }
+            delete farmer.password;
+            delete farmer.licenseKey;
+            delete farmer.productIds;
         }
         return farmers
     }

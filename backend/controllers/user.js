@@ -28,14 +28,14 @@ farmRegister = async function (req, res, next) {
             password: hash,
             role: "farmer",
             email: reqEmail,
-            "license-key": reqLicense,
+            licenseKey: reqLicense,
             location: reqLocation,
             productIds: []
         };
         await db.createUser(user);
         res.json({"result": "success"});
     } else {
-        res.Status(500);
+        res.sendStatus(500);
         res.send("License not valid");
     }
 

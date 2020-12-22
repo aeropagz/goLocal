@@ -1,5 +1,20 @@
 <div class=" mt-4 mb-4 col-md-8 offset-md-1">
-    <div class="row" id="content">
-
+    <div class="row">
+        <div class="col-md-12 col-lg-6" *ngFor="let farmer of farmers">
+            <div class="card"> 
+                <div class="card-header ">
+                    <h1>{{farmer.name}}</h1>
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let item of farmer.products | keyvalue">
+                        <p class="card-text">{{item.value.name}}<p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-info active" role="button" aria-pressed="true">Go to farmer Profile</a>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-info mt-4" (click)="loadFarmer()">Lade</button>
     </div>
 </div>
