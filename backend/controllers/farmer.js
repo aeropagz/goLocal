@@ -39,7 +39,13 @@ createProduct = function(req, res, next){
     });
 }
 
+getAllFarmerWithProduct = async function (req, res, next){
+    const farmers = await db.getAllFarmerWithProduct();
+    res.json(farmers);
+}
+
 module.exports = {
     validateLicense,
-    createProduct
+    createProduct,
+    getAllFarmerWithProduct
 }

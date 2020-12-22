@@ -12,6 +12,7 @@ const routes: Routes = [
   {path: 'product', component: CreateProductComponent, canActivate: [AuthGuardService]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: '',   redirectTo: '/shop', pathMatch: 'full'}
 ];
 
 @NgModule({

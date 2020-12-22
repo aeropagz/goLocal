@@ -6,7 +6,7 @@ createProduct = async function (productObj) {
     if (db) {
         try {
             await db.collection("products").insertOne(productObj);
-            await db.collection("users").updateOne({ "id": productObj.farmerID}, {$push:{products: productObj.id}});
+            await db.collection("users").updateOne({ "id": productObj.farmerID}, {$push:{productIds: productObj.id}});
         }
         catch (error) {
             throw error;
@@ -63,11 +63,11 @@ getProducts = async function (productIDs) {
 }
 
 
-getProduct = async function (productID) {
+getProduct = async function (productId) {
     let db = mongoUtil.getDb();
     if (db) {
         try {
-            let product = await db.collection("products").findOne({ "id": productID });
+            let product = await db.collection("products").findOne({ "id": productId });
             return product;
         }
         catch (error) {

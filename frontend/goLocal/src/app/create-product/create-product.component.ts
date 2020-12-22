@@ -48,14 +48,8 @@ export class CreateProductComponent implements OnInit {
   get f(){ return this.form.controls; }
 
   onSubmit(): void {
-    console.log("subbed");
-    console.log(this.f.deliveryOptions.errors);
-    
-    
     this.submitted = true;
     if(this.form.invalid){
-      console.log("not valid");
-      
       return;
     }
     this.loading = true;
@@ -67,8 +61,6 @@ export class CreateProductComponent implements OnInit {
           this.router.navigateByUrl(returnUrl);
         },
         error: error => {
-          console.log(error);
-          
           this.loading = false;
         }
       });

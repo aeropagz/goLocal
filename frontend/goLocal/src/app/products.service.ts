@@ -9,12 +9,15 @@ import { Product } from "./product";
   providedIn: 'root'
 })
 export class ProductsService {
+  private apiUrl = "http://localhost:8080/products"
 
   constructor(private http: HttpClient) { }
 
   createProduct(product: Product){
-    console.log("product");
-    
-    return this.http.post('http://localhost:8080/products', product);
+    return this.http.post(this.apiUrl , product);
+  }
+
+  getProductByFarmers(){
+    return this.http.get(this.apiUrl);
   }
 }

@@ -13,4 +13,5 @@ module.exports = {
     getProduct: products.getProduct,
     getAllProducts: products.getAllProducts,
     getProducts: products.getProducts,
+    getAllFarmerWithProduct: farmer.getAllFarmerWithProduct,
 };

@@ -17,9 +17,7 @@ registerpage = function (req, res, next) {
 registerfarmerpage = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/user/registerfarmer.html"));
 }
-showFarmer = function (req, res, next) {
-    res.sendFile(path.join(__dirname + "/../public/product.html"));
-}
+
 cart = function (req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/cart.html"));
 }
@@ -31,6 +29,5 @@ module.exports = {
     loginpage,
     registerpage,
     registerfarmerpage,
-    showFarmer,
     cart
 }

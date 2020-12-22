@@ -17,7 +17,6 @@ router.get("/cart", [authenticate.authenticateJWT, checkRole.checkRoleCust], ind
 
 router.get("/register", index.registerpage);
 router.get("/registerfarmer", index.registerfarmerpage);
-router.get("/farmer", [authenticate.authenticateJWT, checkRole.checkRoleFarmer], index.showFarmer);
 
 
 router.use("/farmer", farmer);
