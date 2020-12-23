@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { RegisterFarmerComponent } from './register-farmer/register-farmer.component';
 import { RegisterCustomerComponent } from './register-customer/register-customer.component';
 import { CreateProductComponent } from './create-product/create-product.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 
@@ -23,7 +24,8 @@ import { CreateProductComponent } from './create-product/create-product.componen
     RegisterComponent,
     RegisterFarmerComponent,
     RegisterCustomerComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

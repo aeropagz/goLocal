@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AccountService } from '../account.service';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-register-farmer',
@@ -20,7 +21,8 @@ export class RegisterFarmerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountSerice: AccountService
+    private accountSerice: AccountService,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit(): void {
@@ -44,10 +46,12 @@ export class RegisterFarmerComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: ()=> {
-          const returnUrl = '/login';
-          this.router.navigateByUrl(returnUrl);
+          
+          this.alertService.success('Regristration successfull', {keepAfterRouteChange: true});
+          this.router.navigateByUrl('/login');
         },
         error: error => {
+          this.alertService.error(error.error, {autoClose: true});
           this.loading = false;
         }
       })
