@@ -35,8 +35,7 @@ farmRegister = async function (req, res, next) {
         await db.createUser(user);
         res.json({"result": "success"});
     } else {
-        res.sendStatus(500);
-        res.send("License not valid");
+        res.status(401).send("License or Name not valid");
     }
 
 
@@ -79,8 +78,7 @@ login = async function (req, res, next) {
                 "role": user.role,
                 "token": token});
     } else{
-        res.status(500);
-        res.send('Wrong password or username')
+        res.status(401).send('Wrong password or username');
     }
 }
 

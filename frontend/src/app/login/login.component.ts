@@ -4,6 +4,7 @@ import { first } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { AccountService } from "../account.service";
+import { AlertService } from "../alert.service";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private accountService: AccountService,
-              private router: Router) { }
+              private router: Router,
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -39,9 +41,11 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: () => {
           const returnUrl = '/shop';
+          this.alertService.success('Login Success', {keepAfterRouteChange: true});
           this.router.navigateByUrl(returnUrl);
         },
         error: error => {
+          this.alertService.error(error.error);
           this.loading = false;
         }
       });
