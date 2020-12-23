@@ -5,14 +5,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { ShopComponent } from './shop/shop.component';
+import { LoginComponent } from './_components/login/login.component';
+import { ShopComponent } from './_components/shop/shop.component';
 import { JwtInterceptorService } from './jwt-interceptor.service';
-import { RegisterComponent } from './register/register.component';
-import { RegisterFarmerComponent } from './register-farmer/register-farmer.component';
-import { RegisterCustomerComponent } from './register-customer/register-customer.component';
-import { CreateProductComponent } from './create-product/create-product.component';
-import { AlertComponent } from './alert/alert.component';
+import { RegisterComponent } from './_components/register/register.component';
+import { RegisterFarmerComponent } from './_components/register-farmer/register-farmer.component';
+import { RegisterCustomerComponent } from './_components/register-customer/register-customer.component';
+import { CreateProductComponent } from './_components/create-product/create-product.component';
+import { AlertComponent } from './_components/alert/alert.component';
 
 
 

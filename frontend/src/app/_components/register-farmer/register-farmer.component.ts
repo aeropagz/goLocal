@@ -2,23 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
-import { AccountService } from '../account.service';
+import { AccountService } from '../../_services/account.service';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({
-  selector: 'app-register-customer',
-  templateUrl: './register-customer.component.html',
-  styleUrls: ['./register-customer.component.scss']
+  selector: 'app-register-farmer',
+  templateUrl: './register-farmer.component.html',
+  styleUrls: ['./register-farmer.component.scss']
 })
-export class RegisterCustomerComponent implements OnInit {
+export class RegisterFarmerComponent implements OnInit {
+
   form: FormGroup;
   loading = false;
   submitted = false;
+  public selectedState: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService
+    private accountSerice: AccountService,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +30,8 @@ export class RegisterCustomerComponent implements OnInit {
       email: ['', Validators.required],
       name: ['', Validators.required],
       password: ['', Validators.required],
+      license: ['', Validators.required],
+      location: ['', Validators.required]
     });
   }
   get f() { return this.form.controls; }
@@ -36,16 +42,19 @@ export class RegisterCustomerComponent implements OnInit {
       return;
     }
     this.loading = true; 
-    this.accountService.registerUser(this.form.value)
+    this.accountSerice.registerFarmer(this.form.value)
       .pipe(first())
       .subscribe({
         next: ()=> {
-          const returnUrl = '/login';
-          this.router.navigateByUrl(returnUrl);
+          
+          this.alertService.success('Regristration successfull', {keepAfterRouteChange: true});
+          this.router.navigateByUrl('/login');
         },
         error: error => {
+          this.alertService.error(error.error, {autoClose: true});
           this.loading = false;
         }
-      });
+      })
   }
+
 }

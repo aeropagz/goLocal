@@ -3,9 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn } from "@a
 import { first } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
 
-import { ProductsService } from "../products.service";
+import { ProductsService } from "../../_services/products.service";
 import { error } from '@angular/compiler/src/util';
-import { requireCheckboxes } from '../validatorFuncs';
+import { requireCheckboxes } from '../../validatorFuncs';
 
 @Component({
   selector: 'app-create-product',

@@ -2,27 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
-import { AccountService } from '../account.service';
-import { AlertService } from '../alert.service';
+import { AccountService } from '../../_services/account.service';
 
 @Component({
-  selector: 'app-register-farmer',
-  templateUrl: './register-farmer.component.html',
-  styleUrls: ['./register-farmer.component.scss']
+  selector: 'app-register-customer',
+  templateUrl: './register-customer.component.html',
+  styleUrls: ['./register-customer.component.scss']
 })
-export class RegisterFarmerComponent implements OnInit {
-
+export class RegisterCustomerComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
-  public selectedState: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountSerice: AccountService,
-    private alertService: AlertService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -30,8 +26,6 @@ export class RegisterFarmerComponent implements OnInit {
       email: ['', Validators.required],
       name: ['', Validators.required],
       password: ['', Validators.required],
-      license: ['', Validators.required],
-      location: ['', Validators.required]
     });
   }
   get f() { return this.form.controls; }
@@ -42,19 +36,16 @@ export class RegisterFarmerComponent implements OnInit {
       return;
     }
     this.loading = true; 
-    this.accountSerice.registerFarmer(this.form.value)
+    this.accountService.registerUser(this.form.value)
       .pipe(first())
       .subscribe({
         next: ()=> {
-          
-          this.alertService.success('Regristration successfull', {keepAfterRouteChange: true});
-          this.router.navigateByUrl('/login');
+          const returnUrl = '/login';
+          this.router.navigateByUrl(returnUrl);
         },
         error: error => {
-          this.alertService.error(error.error, {autoClose: true});
           this.loading = false;
         }
-      })
+      });
   }
-
 }

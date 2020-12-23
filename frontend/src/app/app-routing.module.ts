@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuardService } from "./auth-guard.service";
-import { ShopComponent } from "./shop/shop.component";
-import { LoginComponent } from "./login/login.component";
-import { RegisterComponent } from './register/register.component';
-import { CreateProductComponent } from "./create-product/create-product.component";
+import { AuthGuardService } from "./_services/auth-guard.service";
+import { ShopComponent } from "./_components/shop/shop.component";
+import { LoginComponent } from "./_components/login/login.component";
+import { RegisterComponent } from './_components/register/register.component';
+import { CreateProductComponent } from "./_components/create-product/create-product.component";
 
 const routes: Routes = [
   {path: 'shop', component: ShopComponent, canActivate: [AuthGuardService]},
