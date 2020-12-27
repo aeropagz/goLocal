@@ -13,6 +13,7 @@ import { RegisterFarmerComponent } from './_components/register-farmer/register-
 import { RegisterCustomerComponent } from './_components/register-customer/register-customer.component';
 import { CreateProductComponent } from './_components/create-product/create-product.component';
 import { AlertComponent } from './_components/alert/alert.component';
+import { FarmerComponent } from './_components/farmer/farmer.component';
 
 
 
@@ -25,7 +26,8 @@ import { AlertComponent } from './_components/alert/alert.component';
     RegisterFarmerComponent,
     RegisterCustomerComponent,
     CreateProductComponent,
-    AlertComponent
+    AlertComponent,
+    FarmerComponent
   ],
   imports: [
     BrowserModule,
